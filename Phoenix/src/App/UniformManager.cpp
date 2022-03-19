@@ -24,12 +24,15 @@ UniformManager::~UniformManager()
 
 unsigned int UniformManager::x_getUniformLocation(const std::string &uniformName, unsigned int shaderProgramId)
 {
-    if (this->x_uniformLocationCache.find(uniformName) != this->x_uniformLocationCache.end())
-    {
-        return x_uniformLocationCache[uniformName];
+    if (this->x_shaderUniformsCache.find(shaderProgramId) == this->x_shaderUniformsCache.end()) {
+        this->x_shaderUniformsCache[shaderProgramId] = std::unordered_map< std::string, unsigned int>();
     }
-    x_uniformLocationCache[uniformName] = glGetUniformLocation(shaderProgramId, uniformName.c_str());
-    return x_uniformLocationCache[uniformName];
+    if (this->x_shaderUniformsCache[shaderProgramId].find(uniformName) != this->x_shaderUniformsCache[shaderProgramId].end()) 
+    {    
+        return this->x_shaderUniformsCache[shaderProgramId][uniformName];
+    }
+    this->x_shaderUniformsCache[shaderProgramId][uniformName] = glGetUniformLocation(shaderProgramId, uniformName.c_str());
+    return this->x_shaderUniformsCache[shaderProgramId][uniformName];
 }
 
 void UniformManager::setUniform(const std::string &name, unsigned int shaderProgramId, float v0, float v1, float v2)

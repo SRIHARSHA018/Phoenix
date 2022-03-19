@@ -46,9 +46,8 @@ float vertices[] = {
 void Renderer::run(GLFWwindow* window)
 {
     this->x_shader = new Shader("src/App/Shaders/simple_shader.vert", "src/App/Shaders/simple_shader.frag");
+    Shader guiShader("src/App/Shaders/guiShader.vert", "src/App/Shaders/guiShader.frag");
 
-    //Cleanup stuff
-    // Need more optimized class for camera stuff
     //TODO:CleanUp camera class
     camera mainCam(glm::vec3(0.f,0.f,10.f));
     mainCam.projectionMatrix = glm::perspective(glm::radians(mainCam.zoom), windowRender::getAspectRatio(window),0.1f,100.f);
@@ -70,37 +69,19 @@ void Renderer::run(GLFWwindow* window)
     //TODO:spotLight cleanup
     SpotLight spotLight(ambientColor,glm::vec3(0.f,1.f,0.3f),specular,glm::vec3(0.f,0.f,0.8f),glm::vec3(0.f,0.f,1.f),this->x_shader->getShaderProgramId());
 
-    // TODO:do write rendering class
-    vertexArray va;
-    vertexBuffer vb;
-    va.bindVertexArray();
-    vb.bindVertexBuffer();
-    vb.bindBufferData(sizeof(vertices),vertices);
-    va.pushBufferLayout({3,GL_FLOAT,GL_FALSE});
-    va.pushBufferLayout({2,GL_FLOAT,GL_FALSE });
-    va.pushBufferLayout({3,GL_FLOAT,GL_FALSE});
-    va.setupAndEnableAttributes();
 
     //TODO:Cleanup
-    ModelImporter gun("src/res/jinx/new jinx/jinx.obj");
-    //ModelImporter gun("src/res/deer/12961_White-Tailed_Deer_v1_l2.obj");
-    //ModelImporter gun("src/res/container/containerBox.obj");
+    ModelImporter box("src/res/skull-downloadable/source/craneo.obj");
+    ModelImporter gun("src/res/BakedJinx/jinx.obj");
+
     glm::vec3 gunPosition = glm::vec3(0.f);
     glm::vec3 gunRotation = glm::vec3(0.f, 0.f, 0.f);
     glm::vec3 gunScale = glm::vec3(1.f);
 
-    //Mesh* ironman = ObjLoaderUtil::loadModel("src/res/container/container.obj");
-    //ironman->setUpMesh();
-    
-    //TODO: do clean up texture class
-    TexturedMaterial* cubeMat = new TexturedMaterial(this->x_shader->getShaderProgramId());
+    glm::vec3 boxPosition = glm::vec3(0.f,0.f,-10.f);
+    glm::vec3 boxRotation = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 boxScale = glm::vec3(1.f);
 
-
-    x_shader->useShaderProgram();
-    cubeMat->setDiffuseTextureMap("src/res/container2.png");
-    cubeMat->setSpecularTextureMap("src/res/container2_specular.png");
-    cubeMat->setShininess(64.f);
-    cubeMat->update();
 
     //TODO:clean stuff with sceneManager and cam
     this->x_sceneManager = new SceneManager();
@@ -112,9 +93,10 @@ void Renderer::run(GLFWwindow* window)
     //TODO:make things clean from here and optimize the GUI class
     //GUI Manager
     //TODO:clean stuff Temporary
-    //x_guiManager = new GUIManager();
-    //ButtonComponent button(window);
-    //x_guiManager->addUIComponent(&button);
+    //ButtonComponent button(window,0.f,20.f,10.f,10.f);
+    x_guiManager = new GUIManager();
+    ButtonComponent button(window);
+    x_guiManager->addUIComponent(&button);
 
     std::cout << "Phoenix online\n";
     while (!glfwWindowShouldClose(window))
@@ -133,12 +115,15 @@ void Renderer::run(GLFWwindow* window)
         spotLight.setDirection(mainCam.cameraFront);
 
 
-        cubeMat->bindMaterial();
-        cubeMat->update();
-        va.bindVertexArray();
+        glm::mat4 boxModel = glm::mat4(1.f);
+        boxModel = glm::scale(boxModel, boxScale);
+        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.x), glm::vec3(1.f, 0.f, 0.f));
+        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.z), glm::vec3(0.f, 0.f, 1.f));
+        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.y), glm::vec3(0.f, 1.f, 0.f));
+        boxModel = glm::translate(boxModel, boxPosition);
+        this->x_glUniformsManager->setUniformMatrix4fv("model", this->x_shader->getShaderProgramId(), glm::value_ptr(boxModel));
 
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
+        box.draw(this->x_shader->getShaderProgramId());
         
         glm::mat4 gunModel = glm::mat4(1.f);
         gunModel = glm::scale(gunModel, gunScale);
@@ -149,13 +134,13 @@ void Renderer::run(GLFWwindow* window)
         this->x_glUniformsManager->setUniformMatrix4fv("model", this->x_shader->getShaderProgramId(), glm::value_ptr(gunModel));
 
         gun.draw(this->x_shader->getShaderProgramId());
-        //ironman->draw(this->x_shader->getShaderProgramId());
+
 
         //TODO:: create a GUI element for displaying.
         //simple window style box with slider or a button 
         //on hover it would change padding
-        //UI->draw(UIElementType::button)
-        //x_guiManager->UpdateUIComponents();
+        //UI->draw(UIElementType::button);
+        x_guiManager->UpdateUIComponents();
 
         swapBuffers(window);
         pollEvents();

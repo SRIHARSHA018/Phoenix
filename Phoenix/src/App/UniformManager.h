@@ -20,8 +20,7 @@ private:
     unsigned int x_getUniformLocation(const std::string &uniformName, unsigned int shaderProgramId);
 
 private:
-    std::unordered_map<std::string, unsigned int> x_uniformLocationCache;
-
+    std::unordered_map<unsigned int, std::unordered_map<std::string, unsigned int>> x_shaderUniformsCache;
 public:
     void setUniform(const std::string &name, unsigned int shaderProgramId, int v0);
     void setUniform(const std::string& name, unsigned int shaderProgramId, float v0);
