@@ -47,6 +47,7 @@ void Renderer::run(GLFWwindow* window)
 {
     this->x_shader = new Shader("src/App/Shaders/simple_shader.vert", "src/App/Shaders/simple_shader.frag");
 
+    //Cleanup stuff
     //TODO:CleanUp camera class
     camera mainCam(glm::vec3(0.f,0.f,10.f));
     mainCam.projectionMatrix = glm::perspective(glm::radians(mainCam.zoom), windowRender::getAspectRatio(window),0.1f,100.f);

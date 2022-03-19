@@ -32,7 +32,7 @@ public:
 public:
 	int winwidth, winHeight;
 	UIElementProps props;
-	shader* UIshader;
+	Shader* UIshader;
 	//TODO::vertex arrays and other stuff need to be decoupled and maintainable
 	//TODO:Make it flexible so we can use.
 	unsigned int vao, vbo, ibo;

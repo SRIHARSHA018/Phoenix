@@ -118,7 +118,7 @@ void ButtonComponent::createBoxTemplate()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 
 	glBindVertexArray(0);
-	this->UIshader = new shader("src/App/Shaders/guiShader.vert", "src/App/Shaders/guiShader.frag");
+	this->UIshader = new Shader("src/App/Shaders/guiShader.vert", "src/App/Shaders/guiShader.frag");
 }
 
 void ButtonComponent::updateUniforms()
