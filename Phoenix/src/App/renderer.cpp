@@ -46,7 +46,7 @@ float vertices[] = {
 void Renderer::run(GLFWwindow* window)
 {
     this->x_shader = new Shader("src/App/Shaders/simple_shader.vert", "src/App/Shaders/simple_shader.frag");
-    Shader guiShader("src/App/Shaders/guiShader.vert", "src/App/Shaders/guiShader.frag");
+    //Shader guiShader("src/App/Shaders/guiShader.vert", "src/App/Shaders/guiShader.frag");
 
     //TODO:CleanUp camera class
     camera mainCam(glm::vec3(0.f,0.f,10.f));
@@ -72,16 +72,9 @@ void Renderer::run(GLFWwindow* window)
 
     //TODO:Cleanup
     ModelImporter box("src/res/skull-downloadable/source/craneo.obj");
+    box.shaderProgramId = this->x_shader->getShaderProgramId();
     ModelImporter gun("src/res/BakedJinx/jinx.obj");
-
-    glm::vec3 gunPosition = glm::vec3(0.f);
-    glm::vec3 gunRotation = glm::vec3(0.f, 0.f, 0.f);
-    glm::vec3 gunScale = glm::vec3(1.f);
-
-    glm::vec3 boxPosition = glm::vec3(0.f,0.f,-10.f);
-    glm::vec3 boxRotation = glm::vec3(0.f, 0.f, 0.f);
-    glm::vec3 boxScale = glm::vec3(1.f);
-
+    gun.shaderProgramId = this->x_shader->getShaderProgramId();
 
     //TODO:clean stuff with sceneManager and cam
     this->x_sceneManager = new SceneManager();
@@ -89,14 +82,16 @@ void Renderer::run(GLFWwindow* window)
     this->x_sceneManager->addSceneObject(&directionalLight);
     this->x_sceneManager->addSceneObject(&pointLight);
     this->x_sceneManager->addSceneObject(&spotLight);
+    this->x_sceneManager->addSceneObject(&gun);
+    this->x_sceneManager->addSceneObject(&box);
 
     //TODO:make things clean from here and optimize the GUI class
     //GUI Manager
     //TODO:clean stuff Temporary
     //ButtonComponent button(window,0.f,20.f,10.f,10.f);
-    x_guiManager = new GUIManager();
-    ButtonComponent button(window);
-    x_guiManager->addUIComponent(&button);
+    //x_guiManager = new GUIManager();
+    //ButtonComponent button(window);
+    //x_guiManager->addUIComponent(&button);
 
     std::cout << "Phoenix online\n";
     while (!glfwWindowShouldClose(window))
@@ -106,41 +101,21 @@ void Renderer::run(GLFWwindow* window)
 
         Time::updateDeltaTime();
 
+        //TODO:cleanup use program id for every draw and setup calls
         this->x_shader->useShaderProgram();
 
         //TODO:make clean class of scenemangaer
-        this->x_sceneManager->UpdateObjects();
+        this->x_sceneManager->updateObjects();
     
         spotLight.setPostion(mainCam.cameraPosition);
         spotLight.setDirection(mainCam.cameraFront);
-
-
-        glm::mat4 boxModel = glm::mat4(1.f);
-        boxModel = glm::scale(boxModel, boxScale);
-        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.x), glm::vec3(1.f, 0.f, 0.f));
-        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.z), glm::vec3(0.f, 0.f, 1.f));
-        boxModel = glm::rotate(boxModel, glm::radians(boxRotation.y), glm::vec3(0.f, 1.f, 0.f));
-        boxModel = glm::translate(boxModel, boxPosition);
-        this->x_glUniformsManager->setUniformMatrix4fv("model", this->x_shader->getShaderProgramId(), glm::value_ptr(boxModel));
-
-        box.draw(this->x_shader->getShaderProgramId());
-        
-        glm::mat4 gunModel = glm::mat4(1.f);
-        gunModel = glm::scale(gunModel, gunScale);
-        gunModel = glm::rotate(gunModel, glm::radians(gunRotation.x), glm::vec3(1.f, 0.f, 0.f));
-        gunModel = glm::rotate(gunModel, glm::radians(gunRotation.z), glm::vec3(0.f, 0.f, 1.f));
-        gunModel = glm::rotate(gunModel, glm::radians(gunRotation.y), glm::vec3(0.f, 1.f, 0.f));
-        gunModel = glm::translate(gunModel, gunPosition);
-        this->x_glUniformsManager->setUniformMatrix4fv("model", this->x_shader->getShaderProgramId(), glm::value_ptr(gunModel));
-
-        gun.draw(this->x_shader->getShaderProgramId());
 
 
         //TODO:: create a GUI element for displaying.
         //simple window style box with slider or a button 
         //on hover it would change padding
         //UI->draw(UIElementType::button);
-        x_guiManager->UpdateUIComponents();
+        //x_guiManager->UpdateUIComponents();
 
         swapBuffers(window);
         pollEvents();

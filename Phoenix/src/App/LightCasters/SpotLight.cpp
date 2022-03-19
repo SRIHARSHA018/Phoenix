@@ -9,7 +9,7 @@ SpotLight::~SpotLight()
 {
 }
 
-void SpotLight::Update()
+void SpotLight::update()
 {
 	this->x_updateUniforms();
 }

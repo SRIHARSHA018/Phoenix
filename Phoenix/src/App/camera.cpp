@@ -58,7 +58,7 @@ void camera::processCursorMovement(float xPos, float yPos)
 	this->x_processCursorMovement(xoff, yoff);
 }
 
-void camera::Update()
+void camera::update()
 {
 	if (InputControls::isKeyPressed(GLFW_KEY_W)) moveForward();
 	if (InputControls::isKeyPressed(GLFW_KEY_A)) moveLeft();

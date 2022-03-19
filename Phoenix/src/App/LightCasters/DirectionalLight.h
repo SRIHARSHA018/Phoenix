@@ -11,7 +11,7 @@ public:
 		const glm::vec3& direction,unsigned int shaderProgramId);
 	~DirectionalLight();
 public:
-	virtual void Update() override;
+	virtual void update() override;
 	virtual void onEvent(IEvent& event) override;
 private:
 	void x_updateUniforms();

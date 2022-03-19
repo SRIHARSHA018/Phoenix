@@ -14,7 +14,7 @@ DirectionalLight::~DirectionalLight()
 {
 }
 
-void DirectionalLight::Update()
+void DirectionalLight::update()
 {
 	this->x_updateUniforms();
 }

@@ -13,7 +13,7 @@ public:
         const glm::vec3& direction,
         unsigned int shaderProgramId);
     ~SpotLight();
-    virtual void Update() override;
+    virtual void update() override;
     virtual void onEvent(IEvent& event) override;
 public:
     void setPostion(const glm::vec3& position) { this->x_position = position; }

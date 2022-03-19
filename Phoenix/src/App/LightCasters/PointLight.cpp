@@ -9,7 +9,7 @@ PointLight::~PointLight()
 {
 }
 
-void PointLight::Update()
+void PointLight::update()
 {
 	this->x_updateUniforms();
 }

@@ -52,7 +52,7 @@ public:
 	glm::mat4 getProjectionMatrix() { return projectionMatrix; }
 	void processScrollWheel(float val);
 	void processCursorMovement(float xPos, float yPos);
-	virtual void Update() override;
+	virtual void update() override;
 	virtual void onEvent(IEvent& event) override;
 
 private:

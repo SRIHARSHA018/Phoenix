@@ -2,6 +2,9 @@
 
 ModelImporter::ModelImporter(const char* filepath)
 {
+	position = glm::vec3(0.f);
+	rotation = glm::vec3(0.f);
+	scale = glm::vec3(1.f);
 	this->x_loadModel(filepath);
 }
 
@@ -12,12 +15,14 @@ ModelImporter::~ModelImporter()
 	}
 }
 
-void ModelImporter::draw(unsigned int shaderProgramId)
+void ModelImporter::update()
 {
-	for (unsigned int i = 0; i < meshes.size(); i++) 
-	{
-		meshes[i]->draw(shaderProgramId);
-	}
+	this->x_updateUniforms();
+	this->x_draw();
+}
+
+void ModelImporter::onEvent(IEvent& event)
+{
 }
 
 void ModelImporter::x_loadModel(const char* filepath)
@@ -51,6 +56,30 @@ void ModelImporter::x_processNode(aiNode* node, const aiScene* scene)
 	for (unsigned int i = 0; i < node->mNumChildren; i++) {
 		this->x_processNode(node->mChildren[i], scene);
 	}
+}
+
+void ModelImporter::x_updateUniforms()
+{
+	UniformManager::getUniformManager()->setUniformMatrix4fv("model", shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
+}
+
+void ModelImporter::x_draw()
+{
+	for (unsigned int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i]->draw(shaderProgramId);
+	}
+}
+
+glm::mat4 ModelImporter::x_getModelMatrix()
+{
+	glm::mat4 modelMat = glm::mat4(1.f);
+	modelMat = glm::scale(modelMat, scale);
+	modelMat = glm::rotate(modelMat, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
+	modelMat = glm::rotate(modelMat, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
+	modelMat = glm::rotate(modelMat, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
+	modelMat = glm::translate(modelMat, position);
+	return modelMat;
 }
 
 Mesh* ModelImporter::x_processMesh(aiMesh* mesh, const aiScene* scene)

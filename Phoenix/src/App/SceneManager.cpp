@@ -23,10 +23,10 @@ void SceneManager::removeSceneObject(ISceneObject* obj)
 
 }
 
-void SceneManager::UpdateObjects()
+void SceneManager::updateObjects()
 {
 	for (auto it = this->x_sceneObjects.begin(); it != this->x_sceneObjects.end(); it++) {
-		(*it)->Update();
+		(*it)->update();
 	}
 }
 
