@@ -1,17 +1,19 @@
 #include "InputControls.h"
 
 
+
 GLFWwindow* InputControls::window = nullptr;
 
-InputControls::InputControls(sandBox& app)
+
+InputControls::InputControls(GLFWwindow* win)
 {
-	window = app.getWindow();
+	window = win;
 }
 
 bool InputControls::isKeyPressed(int keyCode)
 {
 	auto state = glfwGetKey(window, keyCode);
-	return state == GLFW_PRESS || state==GLFW_REPEAT;
+	return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 bool InputControls::isKeyReleased(int keyCode)
 {

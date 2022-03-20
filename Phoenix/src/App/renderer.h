@@ -10,7 +10,6 @@
 #include "vertexBuffers/vertexArray.h"
 #include "ModelImporters/ModelImporter.h"
 #include "Materials/TexturedMaterial.h"
-#include "windowRender.h"
 #include "GUI/ButtonComponent.h"
 #include "GUI/GUIManager.h"
 
@@ -18,18 +17,20 @@
 class Renderer
 {
 public:
-    ~Renderer();
+	Renderer();
+	~Renderer();
 
-    void run(GLFWwindow* window);
-    void clear();
-    void swapBuffers(GLFWwindow *window);
-    void pollEvents();
-    void onEvent(IEvent& event);
-    
+	void run(GLFWwindow* window);
+	void clear();
+	void swapBuffers(GLFWwindow* window);
+	void pollEvents();
+	void onEvent(IEvent& event);
+
 private:
-    Shader* x_shader;
-    GUIManager* x_guiManager;
-    SceneManager* x_sceneManager;
-    UniformManager *x_glUniformsManager = UniformManager::getUniformManager();
+	GUIManager* x_guiManager;
+	SceneManager* x_sceneManager;
+
+	//std::unique_ptr<GUIManager> x_guiManager;
+	//std::unique_ptr<SceneManager> x_sceneManager;
 
 };

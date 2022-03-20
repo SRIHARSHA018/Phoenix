@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 #include "global.h"
 #include "SceneObject.h"
 #include "InputControls.h"
@@ -12,7 +13,7 @@
 
 
 //TODO: refine camera class
-class camera:public ISceneObject
+class camera :public ISceneObject
 {
 public:
 	glm::vec3 cameraPosition;
@@ -32,15 +33,15 @@ public:
 	glm::mat4 modelMatrix;
 	glm::mat4 projectionMatrix;
 
-	const glm::vec3 worldUp = glm::vec3(0.f,1.f,0.f);
+	const glm::vec3 worldUp = glm::vec3(0.f, 1.f, 0.f);
 
 
 public:
 	camera(glm::vec3 position = glm::vec3(0.f),
 		glm::vec3 up = glm::vec3(0.f, 1.0f, 0.f),
 		glm::vec3 front = glm::vec3(0.f, 0.f, -1.0f),
-		float movementSpeed = 2.5f,float zoomVal=45.f,
-		float sensitivity=0.2f,float yaw=-90.f,float pitch=0.f);
+		float movementSpeed = 2.5f, float zoomVal = 45.f,
+		float sensitivity = 0.2f, float yaw = -90.f, float pitch = 0.f);
 	~camera() {}
 public:
 	void moveForward();

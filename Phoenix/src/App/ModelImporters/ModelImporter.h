@@ -16,7 +16,7 @@
 class ModelImporter:public ISceneObject
 {
 public:
-	ModelImporter(const char* filepath);
+	ModelImporter(const char* filepath,unsigned int shaderProgramId);
 	~ModelImporter();
 
 public:
@@ -34,11 +34,11 @@ private:
 
 private:
 	std::string x_directory;
+	unsigned int x_shaderProgramId;
 
 public:
 	std::vector<Mesh*> meshes;
 	std::vector<Texture> textures_loaded;
-	unsigned int shaderProgramId;
 
 	glm::vec3 position;
 	glm::vec3 rotation;

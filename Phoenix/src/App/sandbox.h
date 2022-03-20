@@ -1,38 +1,39 @@
 #pragma once
-#include"Events/Event.h"
-
 #include<GLEW/glew.h>
 #include <GLFW/glfw3.h>
+#include<memory>
 
-class InputControls;
-class windowRender;
-class Renderer;
+#include "windowRender.h"
+#include "InputControls.h"
+#include "renderer.h"
+
 class sandBox
 {
-    sandBox() {}
+	sandBox() {}
 public:
 
-    sandBox &operator=(const sandBox &) = delete;
-    sandBox(const sandBox &) = delete;
+	sandBox& operator=(const sandBox&) = delete;
+	sandBox(const sandBox&) = delete;
 
-    ~sandBox();
+	~sandBox();
 public:
-    void init();
-    void onEvent(IEvent& e);
-    void run();
-    
-    GLFWwindow* getWindow();
+	void init();
+	void onEvent(IEvent& e);
+	void run();
 
-    static sandBox* getSandBox();
-
-private:
-    windowRender *x_windowRender;
-    Renderer *x_renderer;
-    InputControls* x_inputController;
-    static sandBox* x_sanbox;
+	GLFWwindow* getWindow();
+	static std::shared_ptr<sandBox>& getSandBox();
 
 private:
-    void x_setupWindowRender();
-    void x_setupRenderer();
-    void x_setupInputController();
+
+	std::unique_ptr<InputControls> x_inputController;
+	std::unique_ptr<Renderer> x_renderer;
+	std::unique_ptr<windowRender> x_windowRender;
+
+	static std::shared_ptr<sandBox> x_sandBox;
+
+private:
+	void x_setupWindowRender();
+	void x_setupRenderer();
+	void x_setupInputController();
 };

@@ -1,10 +1,10 @@
-#include "App/sandbox.h"
 #include<memory>
+
+#include "App/sandbox.h"
 
 int main()
 {
-    sandBox* phoenixSandbox = sandBox::getSandBox();
-    phoenixSandbox->init();
-    phoenixSandbox->run();
-    delete phoenixSandbox;
+	std::shared_ptr<sandBox> phoenixSandbox = sandBox::getSandBox();
+	phoenixSandbox->init();
+	phoenixSandbox->run();
 }

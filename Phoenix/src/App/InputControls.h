@@ -2,12 +2,11 @@
 #include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
-#include "sandbox.h"
 
 class InputControls
 {
 public:
-	InputControls( sandBox& app);
+	InputControls(GLFWwindow* win);
 
 public:
 	static bool isKeyPressed(int keyCode);

@@ -1,6 +1,8 @@
 #include "ModelImporter.h"
 
-ModelImporter::ModelImporter(const char* filepath)
+
+ModelImporter::ModelImporter(const char* filepath, unsigned int shaderProgramId)
+	:x_shaderProgramId(shaderProgramId)
 {
 	position = glm::vec3(0.f);
 	rotation = glm::vec3(0.f);
@@ -60,14 +62,14 @@ void ModelImporter::x_processNode(aiNode* node, const aiScene* scene)
 
 void ModelImporter::x_updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniformMatrix4fv("model", shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
+	UniformManager::getUniformManager()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
 }
 
 void ModelImporter::x_draw()
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i]->draw(shaderProgramId);
+		meshes[i]->draw(this->x_shaderProgramId);
 	}
 }
 
