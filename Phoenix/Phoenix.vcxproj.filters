@@ -1733,10 +1733,10 @@
     <None Include="Dependencies\includes\x64\GLM\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\App\Shaders\guiShader.vert" />
-    <None Include="src\App\Shaders\guiShader.frag" />
-    <None Include="src\App\Shaders\simple_shader.frag" />
-    <None Include="src\App\Shaders\simple_shader.vert" />
+    <None Include="src\App\Shaders\glslShaders\guiShader.vert" />
+    <None Include="src\App\Shaders\glslShaders\guiShader.frag" />
+    <None Include="src\App\Shaders\glslShaders\simple_shader.frag" />
+    <None Include="src\App\Shaders\glslShaders\simple_shader.vert" />
     <None Include="assimp-vc142-mtd.dll" />
     <None Include="Dependencies\includes\x64\Assimp\color4.inl">
       <Filter>Header Files</Filter>
@@ -1762,7 +1762,9 @@
     <None Include="Dependencies\includes\x64\Assimp\vector3.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\App\Shaders\model_loading.vert" />
-    <None Include="src\App\Shaders\model_loading.frag" />
+    <None Include="src\App\Shaders\glslShaders\model_loading.vert" />
+    <None Include="src\App\Shaders\glslShaders\model_loading.frag" />
+    <None Include="src\App\Shaders\glslShaders\mouse_picking.vert" />
+    <None Include="src\App\Shaders\glslShaders\mouse_picking.frag" />
   </ItemGroup>
 </Project>

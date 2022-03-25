@@ -1,8 +1,5 @@
 #include "sandbox.h"
 
-
-
-
 std::shared_ptr<sandBox> sandBox::x_sandBox = NULL;
 
 void sandBox::init()

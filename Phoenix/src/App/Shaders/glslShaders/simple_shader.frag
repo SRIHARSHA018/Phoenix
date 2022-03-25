@@ -65,6 +65,16 @@ vec3 calDirectionalLight(DirectionalLight light,vec3 normal,vec3 viewDir);
 vec3 calPointLight(PointLight light,vec3 normal,vec3 viewDir);
 vec3 calSpotLight(SpotLight light,vec3 normal,vec3 viewDir);
 
+//TODO: remove after concept
+float near = 0.1; 
+float far  = 100.0; 
+  
+float LinearizeDepth(float depth) 
+{
+    float z = depth * 2.0 - 1.0; // back to NDC 
+    return (2.0 * near * far) / (far + near - z * (far - near));	
+}
+
 void main()
 {
     vec3 normal = normalize(Normal);
@@ -74,7 +84,18 @@ void main()
     vec3 result = calDirectionalLight(u_dirLight,normal,viewDir);
     result += calPointLight(u_pointLight,normal,viewDir);
     result += calSpotLight(u_spotLight,normal,viewDir);
+
+    float dotEyeNormal = dot(normal,viewDir);
+    dotEyeNormal = max(0.0,dotEyeNormal);
+    vec4 latest = mix(vec4(1.0f,0.f,0.f,1.f),vec4(result,1.f),smoothstep(0.2,0.3,dotEyeNormal));
+   
+    //FragColor = latest;
     FragColor = vec4(result,1.0);
+
+
+    //TODO:Depth test
+    //float depth = LinearizeDepth(gl_FragCoord.z) / far;
+    //FragColor = vec4(vec3(depth),1.0);
     
 }
 vec3 calDirectionalLight(DirectionalLight light,vec3 normal,vec3 viewDir){

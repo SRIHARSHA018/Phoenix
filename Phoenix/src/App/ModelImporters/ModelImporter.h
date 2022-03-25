@@ -13,10 +13,11 @@
 #include "SceneObject.h"
 #include "UniformManager.h"
 
-class ModelImporter:public ISceneObject
+class ModelImporter :public ISceneObject
 {
 public:
-	ModelImporter(const char* filepath,unsigned int shaderProgramId);
+
+	ModelImporter(const char* filepath, unsigned int shaderProgramId);
 	~ModelImporter();
 
 public:
@@ -25,12 +26,12 @@ public:
 
 private:
 	void x_loadModel(const char* filepath);
-	void x_processNode(aiNode* node,const aiScene* scene);
+	void x_processNode(aiNode* node, const aiScene* scene);
 	void x_updateUniforms();
 	void x_draw();
 	glm::mat4 x_getModelMatrix();
-	Mesh* x_processMesh(aiMesh* mesh,const aiScene* scene);
-	std::vector<Texture> x_loadMaterialTextures(aiMaterial* material, aiTextureType type,std::string typename);
+	Mesh* x_processMesh(aiMesh* mesh, const aiScene* scene);
+	std::vector<Texture> x_loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typename);
 
 private:
 	std::string x_directory;
@@ -43,6 +44,7 @@ public:
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
+
 };
 
 

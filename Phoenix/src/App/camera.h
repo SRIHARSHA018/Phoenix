@@ -28,7 +28,7 @@ public:
 	float cameraPitch;
 	float cameraRotationSensitivity;
 	bool firstMouseMovement;
-	unsigned int shaderProgramId;
+
 
 	glm::mat4 modelMatrix;
 	glm::mat4 projectionMatrix;
@@ -37,12 +37,13 @@ public:
 
 
 public:
-	camera(glm::vec3 position = glm::vec3(0.f),
+	camera(unsigned int shaderProgramId, glm::vec3 position = glm::vec3(0.f),
 		glm::vec3 up = glm::vec3(0.f, 1.0f, 0.f),
 		glm::vec3 front = glm::vec3(0.f, 0.f, -1.0f),
 		float movementSpeed = 2.5f, float zoomVal = 45.f,
 		float sensitivity = 0.2f, float yaw = -90.f, float pitch = 0.f);
 	~camera() {}
+
 public:
 	void moveForward();
 	void moveBackward();
@@ -61,5 +62,7 @@ private:
 	void x_processCursorMovement(float xoff, float yoff, bool constrain = true);
 	void x_updateProjectionMatrix(float aspectRatio);
 	void x_updateUniforms();
+private:
+	unsigned int x_shaderProgramId;
 };
 

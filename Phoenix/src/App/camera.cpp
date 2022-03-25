@@ -2,10 +2,10 @@
 #include "global.h"
 #include<iostream>
 
-camera::camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float movementSpeed, float zoomVal,float sensitivity, float yaw, float pitch)
-	:cameraPosition(position),cameraUp(up),cameraFront(front),
-	cameraMovementSpeed(movementSpeed),zoom(zoomVal),cameraRotationSensitivity(sensitivity),
-	cameraYaw(yaw),cameraPitch(pitch)
+camera::camera(unsigned int shaderProgramId, glm::vec3 position, glm::vec3 up, glm::vec3 front, float movementSpeed, float zoomVal, float sensitivity, float yaw, float pitch)
+	:cameraPosition(position), cameraUp(up), cameraFront(front),
+	cameraMovementSpeed(movementSpeed), zoom(zoomVal), cameraRotationSensitivity(sensitivity),
+	cameraYaw(yaw), cameraPitch(pitch), x_shaderProgramId(shaderProgramId)
 {
 	firstMouseMovement = true;
 	modelMatrix = glm::mat4(1.0f);
@@ -17,7 +17,7 @@ camera::camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float movement
 void camera::moveForward()
 {
 
-	cameraPosition += cameraMovementSpeed *Time::getDeltaTime() * cameraFront;
+	cameraPosition += cameraMovementSpeed * Time::getDeltaTime() * cameraFront;
 }
 
 void camera::moveBackward()
@@ -65,23 +65,23 @@ void camera::update()
 	if (InputControls::isKeyPressed(GLFW_KEY_D)) moveRight();
 	if (InputControls::isKeyPressed(GLFW_KEY_S)) moveBackward();
 	if (InputControls::isKeyReleased(GLFW_KEY_LEFT_ALT)) {
-			this->firstMouseMovement = true;
+		this->firstMouseMovement = true;
 	}
 	this->x_updateUniforms();
 }
-void camera::x_updateUniforms() 
+void camera::x_updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniformVec3("u_viewPosition",shaderProgramId , glm::value_ptr(this->cameraPosition));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("model", shaderProgramId, glm::value_ptr(this->modelMatrix));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("view", shaderProgramId, glm::value_ptr(this->getViewMatrix()));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("proj", shaderProgramId, glm::value_ptr(this->projectionMatrix));
+	UniformManager::getUniformManager()->setUniformVec3("u_viewPosition", this->x_shaderProgramId, glm::value_ptr(this->cameraPosition));
+	UniformManager::getUniformManager()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->modelMatrix));
+	UniformManager::getUniformManager()->setUniformMatrix4fv("view", this->x_shaderProgramId, glm::value_ptr(this->getViewMatrix()));
+	UniformManager::getUniformManager()->setUniformMatrix4fv("proj", this->x_shaderProgramId, glm::value_ptr(this->projectionMatrix));
 }
 
 void camera::x_processCursorMovement(float xoff, float yoff, bool constrain)
 {
 	xoff *= cameraRotationSensitivity;
 	yoff *= cameraRotationSensitivity;
-	
+
 	cameraYaw += xoff;
 	cameraPitch += yoff;
 
@@ -94,30 +94,30 @@ void camera::x_processCursorMovement(float xoff, float yoff, bool constrain)
 void camera::onEvent(IEvent& event)
 {
 	switch (event.getEventType()) {
-		case EventType::MOUSE_MOVED: 
-		{
-			if (InputControls::isKeyPressed(GLFW_KEY_LEFT_ALT)) {
-				processCursorMovement(InputControls::getCursorPos().x, InputControls::getCursorPos().y);
-			}
-			break;
+	case EventType::MOUSE_MOVED:
+	{
+		if (InputControls::isKeyPressed(GLFW_KEY_LEFT_ALT)) {
+			processCursorMovement(InputControls::getCursorPos().x, InputControls::getCursorPos().y);
 		}
-		case EventType::MOUSE_SCROLLED:
-		{
-			processScrollWheel(static_cast<MouseScrolledEvent&>(event).getYoffset());
-			break;
-		}
-		case EventType::WINDOW_RESIZE:
-		{
-			auto windowResizeEvent= static_cast<WindowResizeEvent&>(event);
-			auto aspectRatio = (float)windowResizeEvent.getWidth() / (float)windowResizeEvent.getHeight();
+		break;
+	}
+	case EventType::MOUSE_SCROLLED:
+	{
+		processScrollWheel(static_cast<MouseScrolledEvent&>(event).getYoffset());
+		break;
+	}
+	case EventType::WINDOW_RESIZE:
+	{
+		auto windowResizeEvent = static_cast<WindowResizeEvent&>(event);
+		auto aspectRatio = (float)windowResizeEvent.getWidth() / (float)windowResizeEvent.getHeight();
 
-			x_updateProjectionMatrix(aspectRatio);
-			break;
-		}
-		default:break;
+		x_updateProjectionMatrix(aspectRatio);
+		break;
+	}
+	default:break;
 	}
 }
-void camera::x_updateCameraVectors() 
+void camera::x_updateCameraVectors()
 {
 	glm::vec3 front;
 	front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));

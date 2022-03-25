@@ -39,8 +39,6 @@ void windowRender::x_init()
 			std::cout << "Failed to initialize GLEW" << std::endl;
 			shutDown();
 		}
-		glfwSwapInterval(1);
-		glEnable(GL_DEPTH_TEST);
 		glfwSetErrorCallback(errorCallback);
 		glfwSetWindowUserPointer(this->x_mainWindow, this);
 

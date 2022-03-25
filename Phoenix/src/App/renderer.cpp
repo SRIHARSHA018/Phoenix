@@ -2,22 +2,22 @@
 
 Renderer::Renderer()
 {
-	this->x_sceneManager = new SceneManager();
-	this->x_guiManager = new GUIManager();
-
 	//this->x_guiManager = std::unique_ptr<GUIManager>(new GUIManager());
-	//this->x_sceneManager = std::unique_ptr<SceneManager>(new SceneManager());
+	this->x_sceneManager = std::unique_ptr<SceneManager>(new SceneManager());
 }
 void Renderer::run(GLFWwindow* window)
 {
-	Shader shader("src/App/Shaders/simple_shader.vert", "src/App/Shaders/simple_shader.frag");
+	//Rendering settings
+	initRenderSettings();
+
+	Shader shader("src/App/Shaders/glslShaders/simple_shader.vert", "src/App/Shaders/glslShaders/simple_shader.frag");
 
 	//TODO:CleanUp camera class
 	//TODO:Really a messy code make sure to optimize
-	camera mainCam(glm::vec3(0.f, 0.f, 10.f));
+	camera mainCam(shader.getShaderProgramId(), glm::vec3(0.f, 0.f, 10.f));
 	mainCam.projectionMatrix = glm::perspective(glm::radians(mainCam.zoom), windowRender::getAspectRatio(window), 0.1f, 100.f);
-	mainCam.shaderProgramId = shader.getShaderProgramId();
 
+	//Lights stuff
 	glm::vec3 lightColor = glm::vec3(1.f);
 	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
@@ -31,6 +31,7 @@ void Renderer::run(GLFWwindow* window)
 
 	//TODO:Cleanup
 	ModelImporter box("src/res/skull-downloadable/source/craneo.obj", shader.getShaderProgramId());
+
 	ModelImporter gun("src/res/BakedJinx/jinx.obj", shader.getShaderProgramId());
 
 	//TODO:clean stuff with sceneManager and cam
@@ -45,8 +46,8 @@ void Renderer::run(GLFWwindow* window)
 	//TODO:make things clean from here and optimize the GUI class
 	//GUI Manager
 	//TODO:clean stuff Temporary
-	ButtonComponent button(window);
-	x_guiManager->addUIComponent(&button);
+	//ButtonComponent button(window);
+	//x_guiManager->addUIComponent(&button);
 
 	std::cout << "Phoenix online\n";
 
@@ -70,7 +71,7 @@ void Renderer::run(GLFWwindow* window)
 		//simple window style box with slider or a button 
 		//on hover it would change padding
 		//UI->draw(UIElementType::button);
-		x_guiManager->UpdateUIComponents();
+		//x_guiManager->UpdateUIComponents();
 
 		swapBuffers(window);
 		pollEvents();
@@ -93,16 +94,22 @@ void Renderer::pollEvents()
 	glfwPollEvents();
 }
 
+void Renderer::initRenderSettings()
+{
+	glfwSwapInterval(1);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_STENCIL_TEST);
+}
+
 void Renderer::onEvent(IEvent& event)
 {
 	this->x_sceneManager->onEvent(event);
-	this->x_guiManager->onEvent(event);
+	//this->x_guiManager->onEvent(event);
 }
 
 
 
 Renderer::~Renderer()
 {
-	delete this->x_sceneManager;
-	delete this->x_guiManager;
 }

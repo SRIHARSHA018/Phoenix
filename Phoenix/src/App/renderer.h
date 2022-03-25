@@ -20,17 +20,17 @@ public:
 	Renderer();
 	~Renderer();
 
-	void run(GLFWwindow* window);
+public:
 	void clear();
-	void swapBuffers(GLFWwindow* window);
 	void pollEvents();
+	void initRenderSettings();
+	void run(GLFWwindow* window);
+	void swapBuffers(GLFWwindow* window);
 	void onEvent(IEvent& event);
 
 private:
-	GUIManager* x_guiManager;
-	SceneManager* x_sceneManager;
 
-	//std::unique_ptr<GUIManager> x_guiManager;
-	//std::unique_ptr<SceneManager> x_sceneManager;
+	std::unique_ptr<GUIManager> x_guiManager;
+	std::unique_ptr<SceneManager> x_sceneManager;
 
 };

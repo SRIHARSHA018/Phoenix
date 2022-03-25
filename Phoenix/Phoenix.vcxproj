@@ -740,12 +740,14 @@
     <None Include="Dependencies\includes\x64\GLM\gtx\wrap.inl" />
     <None Include="glew32.dll" />
     <None Include="glfw3.dll" />
-    <None Include="src\App\Shaders\guiShader.frag" />
-    <None Include="src\App\Shaders\guiShader.vert" />
-    <None Include="src\App\Shaders\model_loading.frag" />
-    <None Include="src\App\Shaders\model_loading.vert" />
-    <None Include="src\App\Shaders\simple_shader.frag" />
-    <None Include="src\App\Shaders\simple_shader.vert" />
+    <None Include="src\App\Shaders\glslShaders\guiShader.frag" />
+    <None Include="src\App\Shaders\glslShaders\guiShader.vert" />
+    <None Include="src\App\Shaders\glslShaders\model_loading.frag" />
+    <None Include="src\App\Shaders\glslShaders\model_loading.vert" />
+    <None Include="src\App\Shaders\glslShaders\mouse_picking.frag" />
+    <None Include="src\App\Shaders\glslShaders\mouse_picking.vert" />
+    <None Include="src\App\Shaders\glslShaders\simple_shader.frag" />
+    <None Include="src\App\Shaders\glslShaders\simple_shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
