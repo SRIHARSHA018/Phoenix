@@ -159,7 +159,7 @@
     <ClCompile Include="src\App\ModelImporters\ModelImporter.cpp" />
     <ClCompile Include="src\App\LightCasters\SpotLight.cpp" />
     <ClCompile Include="src\App\LightCasters\PointLight.cpp" />
-    <ClCompile Include="src\App\camera.cpp" />
+    <ClCompile Include="src\App\Camera\camera.cpp" />
     <ClCompile Include="src\App\Events\WindowEvents.h" />
     <ClCompile Include="src\App\global.cpp" />
     <ClCompile Include="src\App\GUI\ButtonComponent.cpp" />
@@ -168,13 +168,13 @@
     <ClCompile Include="src\App\LightCasters\DirectionalLight.cpp" />
     <ClCompile Include="src\App\renderer.cpp" />
     <ClCompile Include="src\App\sandbox.cpp" />
-    <ClCompile Include="src\App\SceneManager.cpp" />
+    <ClCompile Include="src\App\Scene\SceneObjectManager.cpp" />
     <ClCompile Include="src\App\Shaders\shader.cpp" />
     <ClCompile Include="src\App\Shaders\ShaderUtils.cpp" />
-    <ClCompile Include="src\App\UniformManager.cpp" />
+    <ClCompile Include="src\App\Shaders\UniformManager.cpp" />
     <ClCompile Include="src\App\vertexBuffers\indexBuffer.cpp" />
     <ClCompile Include="src\App\vertexBuffers\vertexBuffer.cpp" />
-    <ClCompile Include="src\App\windowRender.cpp" />
+    <ClCompile Include="src\App\Window\windowRender.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\App\vertexBuffers\vertexArray.cpp" />
     <ClCompile Include="src\App\TextureUnit\TextureFactory.cpp" />
@@ -567,25 +567,26 @@
     <ClInclude Include="src\App\GUI\GUIManager.h" />
     <ClInclude Include="src\App\LightCasters\DirectionalLight.h" />
     <ClInclude Include="src\App\LightCasters\ILight.h" />
-    <ClInclude Include="src\App\SceneObject.h" />
-    <ClInclude Include="src\App\camera.h" />
+    <ClInclude Include="src\App\Scene\SceneObject.h" />
+    <ClInclude Include="src\App\Camera\camera.h" />
     <ClInclude Include="src\App\Events\Event.h" />
     <ClInclude Include="src\App\Events\KeyEvent.h" />
     <ClInclude Include="src\App\global.h" />
     <ClInclude Include="src\App\InputControls.h" />
     <ClInclude Include="src\App\renderer.h" />
     <ClInclude Include="src\App\sandbox.h" />
-    <ClInclude Include="src\App\SceneManager.h" />
+    <ClInclude Include="src\App\Scene\SceneObjectManager.h" />
     <ClInclude Include="src\App\Shaders\shader.h" />
     <ClInclude Include="src\App\Shaders\ShaderUtils.h" />
-    <ClInclude Include="src\App\UniformManager.h" />
+    <ClInclude Include="src\App\Shaders\UniformManager.h" />
     <ClInclude Include="src\App\vertexBuffers\indexBuffer.h" />
     <ClInclude Include="src\App\vertexBuffers\vertexBuffer.h" />
-    <ClInclude Include="src\App\windowRender.h" />
+    <ClInclude Include="src\App\Window\windowRender.h" />
     <ClInclude Include="src\App\TextureUnit\Texture.h" />
     <ClInclude Include="src\App\GUI\IUIComponent.h" />
     <ClInclude Include="src\App\vertexBuffers\vertexArray.h" />
     <ClInclude Include="src\App\TextureUnit\TextureFactory.h" />
+    <ClInclude Include="src\App\Window\WindowUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\libraries\x64\assimp-vc142-mtd.lib" />

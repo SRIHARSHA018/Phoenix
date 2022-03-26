@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include<memory>
 
-#include "windowRender.h"
+#include "Window/windowRender.h"
 #include "InputControls.h"
 #include "renderer.h"
 
@@ -21,16 +21,16 @@ public:
 	void onEvent(IEvent& e);
 	void run();
 
+	static std::shared_ptr<sandBox>& get();
+
 	GLFWwindow* getWindow();
-	static std::shared_ptr<sandBox>& getSandBox();
 
 private:
-
+	std::shared_ptr<Window> x_windowRender;
 	std::unique_ptr<InputControls> x_inputController;
 	std::unique_ptr<Renderer> x_renderer;
-	std::unique_ptr<windowRender> x_windowRender;
 
-	static std::shared_ptr<sandBox> x_sandBox;
+	static std::shared_ptr<sandBox> x_instance;
 
 private:
 	void x_setupWindowRender();

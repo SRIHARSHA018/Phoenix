@@ -30,10 +30,10 @@
     <ClCompile Include="src\App\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\UniformManager.cpp">
+    <ClCompile Include="src\App\Shaders\UniformManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\windowRender.cpp">
+    <ClCompile Include="src\App\Window\windowRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\includes\x64\StbImage\stb_image.cpp">
@@ -42,7 +42,7 @@
     <ClCompile Include="Dependencies\includes\x64\GLM\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\camera.cpp">
+    <ClCompile Include="src\App\Camera\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\global.cpp">
@@ -54,7 +54,7 @@
     <ClCompile Include="src\App\InputControls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\SceneManager.cpp">
+    <ClCompile Include="src\App\Scene\SceneObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\GUI\ButtonComponent.cpp">
@@ -128,10 +128,10 @@
     <ClInclude Include="src\App\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\UniformManager.h">
+    <ClInclude Include="src\App\Shaders\UniformManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\windowRender.h">
+    <ClInclude Include="src\App\Window\windowRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\includes\x64\StbImage\stb_image.h">
@@ -986,7 +986,7 @@
     <ClInclude Include="Dependencies\includes\x64\GLM\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\camera.h">
+    <ClInclude Include="src\App\Camera\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\global.h">
@@ -1001,10 +1001,10 @@
     <ClInclude Include="src\App\InputControls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\SceneManager.h">
+    <ClInclude Include="src\App\Scene\SceneObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\SceneObject.h">
+    <ClInclude Include="src\App\Scene\SceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Events\MouseEvent.h">
@@ -1314,6 +1314,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Shaders\ShaderUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Window\WindowUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

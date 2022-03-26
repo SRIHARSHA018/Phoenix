@@ -25,7 +25,7 @@ ButtonComponent::ButtonComponent(GLFWwindow* window)
 	props.x = 0.f;
 	props.y = 0.5f;
 	props.width = 0.2f;
-	props.height =props.width;
+	props.height = props.width;
 	updateMatrices();
 	createBoxTemplate();
 }
@@ -49,7 +49,7 @@ ButtonComponent::~ButtonComponent()
 }
 
 void ButtonComponent::draw()
-{	
+{
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -58,23 +58,23 @@ void ButtonComponent::onEvent(IEvent& event)
 {
 	switch (event.getEventType())
 	{
-		case EventType::MOUSE_MOVED: 
-		{
+	case EventType::MOUSE_MOVED:
+	{
 
-			auto xpos = static_cast<MouseMovedEvent&>(event).GetCursorX();
-			auto ypos = static_cast<MouseMovedEvent&>(event).GetCursorY();
-			if (isMouseHovering(xpos, ypos)) {
-				paddingAnimation(1.5f);
-			}
-			else {
-				paddingAnimation();
-			}
-			break;
+		auto xpos = static_cast<MouseMovedEvent&>(event).GetCursorX();
+		auto ypos = static_cast<MouseMovedEvent&>(event).GetCursorY();
+		if (isMouseHovering(xpos, ypos)) {
+			paddingAnimation(1.5f);
 		}
-		case EventType::WINDOW_RESIZE:
-		{
-			updateConstraints(static_cast<WindowResizeEvent&>(event).getWidth(), static_cast<WindowResizeEvent&>(event).getHeight());
+		else {
+			paddingAnimation();
 		}
+		break;
+	}
+	case EventType::WINDOW_RESIZE:
+	{
+		updateConstraints(static_cast<WindowResizeEvent&>(event).getWidth(), static_cast<WindowResizeEvent&>(event).getHeight());
+	}
 	}
 }
 
@@ -89,13 +89,13 @@ bool ButtonComponent::isMouseHovering(float xpos, float ypos) {
 
 	//TODO:Optimize this stuff
 	float xglCoords = (xpos * 2.0f) / winwidth - 1.0f;
-	float yglCoords = 1.0f-(ypos * 2.0f) / winHeight;
-	std::cout << " ( " << xglCoords<< " , " << yglCoords<< " )\n";
-	auto p  = props.x - props.width / 2.f;
+	float yglCoords = 1.0f - (ypos * 2.0f) / winHeight;
+	std::cout << " ( " << xglCoords << " , " << yglCoords << " )\n";
+	auto p = props.x - props.width / 2.f;
 	auto p_ = props.x + props.width / 2.f;
-	auto q   = props.y - props.height / 2.f;
+	auto q = props.y - props.height / 2.f;
 	auto q_ = props.y + props.height / 2.f;
-	glm::vec4 ray_clip = glm::vec4(xglCoords,yglCoords,-1.f,1.f);
+	glm::vec4 ray_clip = glm::vec4(xglCoords, yglCoords, -1.f, 1.f);
 	glm::vec4 ray_eye = glm::inverse(this->x_projectionMatrix) * ray_clip;
 	if ((ray_eye.x > p && ray_eye.x < p_) && (ray_eye.y > q && ray_eye.y < q_)) return true;
 	return false;
@@ -110,7 +110,7 @@ void ButtonComponent::createBoxTemplate()
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER,sizeof(boxVertices),boxVertices,GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(boxVertices), boxVertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boxIndices), boxIndices, GL_STATIC_DRAW);
 
@@ -123,8 +123,8 @@ void ButtonComponent::createBoxTemplate()
 
 void ButtonComponent::updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniformMatrix4fv("u_uimodel", this->UIshader->getShaderProgramId(), glm::value_ptr(getModelMatrix()));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("u_uiproj", this->UIshader->getShaderProgramId(), glm::value_ptr(getProjectionMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("u_uimodel", this->UIshader->getShaderProgramId(), glm::value_ptr(getModelMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("u_uiproj", this->UIshader->getShaderProgramId(), glm::value_ptr(getProjectionMatrix()));
 }
 
 void ButtonComponent::updateConstraints(unsigned int width, unsigned int height)
@@ -132,7 +132,7 @@ void ButtonComponent::updateConstraints(unsigned int width, unsigned int height)
 	winwidth = width;
 	winHeight = height;
 	props.x = 0.f;
-	props.y = 0.5f; 
+	props.y = 0.5f;
 	props.width = 0.2f;
 	props.height = props.width;
 	updateMatrices();

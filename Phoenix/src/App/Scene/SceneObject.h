@@ -6,5 +6,5 @@ public:
 	virtual ~ISceneObject() {}
 public:
 	virtual void update() = 0;
-	virtual void onEvent(IEvent& event) = 0 ;
+	virtual void onEvent(IEvent& event) = 0;
 };

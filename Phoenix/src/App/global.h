@@ -2,19 +2,17 @@
 #include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
 
-
-
 class Time
 {
 private:
-    static float lastTime;
-    static float deltaTime;
-    ~Time() {}
+	static float lastTime;
+	static float deltaTime;
+	~Time() {}
 private:
-    Time() {}
+	Time() {}
 public:
-    static void updateDeltaTime();
-    static const float getDeltaTime();
+	static void updateDeltaTime();
+	static const float getDeltaTime();
 };
 
 

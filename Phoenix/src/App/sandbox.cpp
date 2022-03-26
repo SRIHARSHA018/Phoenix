@@ -1,6 +1,6 @@
 #include "sandbox.h"
 
-std::shared_ptr<sandBox> sandBox::x_sandBox = NULL;
+std::shared_ptr<sandBox> sandBox::x_instance = NULL;
 
 void sandBox::init()
 {
@@ -21,16 +21,16 @@ GLFWwindow* sandBox::getWindow()
 	return this->x_windowRender->getMainWindow();
 }
 
-std::shared_ptr<sandBox>& sandBox::getSandBox()
+std::shared_ptr<sandBox>& sandBox::get()
 {
-	if (x_sandBox != NULL) return x_sandBox;
-	x_sandBox = std::shared_ptr<sandBox>(new sandBox());
-	return x_sandBox;
+	if (x_instance != NULL) return x_instance;
+	x_instance = std::shared_ptr<sandBox>(new sandBox());
+	return x_instance;
 }
 
 void sandBox::x_setupWindowRender()
 {
-	this->x_windowRender = std::unique_ptr<windowRender>(new windowRender());
+	this->x_windowRender = Window::get();
 	this->x_windowRender->setEventCallback(std::bind(&sandBox::onEvent, this, std::placeholders::_1));
 }
 void sandBox::x_setupRenderer()

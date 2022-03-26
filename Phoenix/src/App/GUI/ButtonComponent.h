@@ -1,31 +1,31 @@
 #pragma once
 #include<GLEW/glew.h>
 #include <GLFW/glfw3.h>
-#include "windowRender.h"
+#include "Window/windowRender.h"
 #include "IUIComponent.h"
 #include "Events/MouseEvent.h"
 #include "vertexBuffers/vertexbuffer.h"
 #include "Shaders/shader.h"
-#include "UniformManager.h"
+#include "Shaders/UniformManager.h"
 
 class ButtonComponent :public IUIComponent {
 public:
 	ButtonComponent(GLFWwindow* window);
-	ButtonComponent(GLFWwindow* window,float x,float y, float width,float height);
+	ButtonComponent(GLFWwindow* window, float x, float y, float width, float height);
 	~ButtonComponent();
-	
+
 public:
 	virtual void draw() override;
 	virtual void onEvent(IEvent& event) override;
 	virtual void update() override;
 
 public:
-	bool isMouseHovering(float xpos,float ypos);
+	bool isMouseHovering(float xpos, float ypos);
 	void createBoxTemplate();
 	void updateUniforms();
-	void updateConstraints(unsigned int width,unsigned int height);
+	void updateConstraints(unsigned int width, unsigned int height);
 	void updateMatrices();
-	void paddingAnimation(float fact=1.f);
+	void paddingAnimation(float fact = 1.f);
 	glm::mat4 getModelMatrix();
 	glm::mat4 getProjectionMatrix();
 

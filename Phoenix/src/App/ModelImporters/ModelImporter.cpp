@@ -72,7 +72,7 @@ void ModelImporter::x_processNode(aiNode* node, const aiScene* scene)
 
 void ModelImporter::x_updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
 
 }
 

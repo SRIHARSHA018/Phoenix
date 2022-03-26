@@ -4,11 +4,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "global.h"
-#include "SceneObject.h"
+#include "Scene/SceneObject.h"
 #include "InputControls.h"
 #include "Events/MouseEvent.h"
 #include "Events/WindowEvents.h"
-#include "UniformManager.h" 
+#include "Shaders/UniformManager.h"
 
 
 

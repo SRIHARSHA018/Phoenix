@@ -3,7 +3,7 @@
 #include "IMaterial.h"
 #include "TextureUnit/TextureFactory.h"
 #include "TextureUnit/Texture.h"
-#include "UniformManager.h"
+#include "Shaders/UniformManager.h"
 
 class TexturedMaterial :public IMaterial
 {

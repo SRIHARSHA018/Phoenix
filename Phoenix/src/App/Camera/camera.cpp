@@ -71,10 +71,10 @@ void camera::update()
 }
 void camera::x_updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniformVec3("u_viewPosition", this->x_shaderProgramId, glm::value_ptr(this->cameraPosition));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->modelMatrix));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("view", this->x_shaderProgramId, glm::value_ptr(this->getViewMatrix()));
-	UniformManager::getUniformManager()->setUniformMatrix4fv("proj", this->x_shaderProgramId, glm::value_ptr(this->projectionMatrix));
+	UniformManager::get()->setUniformVec3("u_viewPosition", this->x_shaderProgramId, glm::value_ptr(this->cameraPosition));
+	UniformManager::get()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->modelMatrix));
+	UniformManager::get()->setUniformMatrix4fv("view", this->x_shaderProgramId, glm::value_ptr(this->getViewMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("proj", this->x_shaderProgramId, glm::value_ptr(this->projectionMatrix));
 }
 
 void camera::x_processCursorMovement(float xoff, float yoff, bool constrain)

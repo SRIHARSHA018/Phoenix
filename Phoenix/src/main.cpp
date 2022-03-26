@@ -4,7 +4,7 @@
 
 int main()
 {
-	std::shared_ptr<sandBox> phoenixSandbox = sandBox::getSandBox();
+	std::shared_ptr<sandBox> phoenixSandbox = sandBox::get();
 	phoenixSandbox->init();
 	phoenixSandbox->run();
 }

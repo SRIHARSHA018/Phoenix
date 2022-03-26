@@ -1,7 +1,7 @@
 #include "TexturedMaterial.h"
 
 
-TexturedMaterial::TexturedMaterial(unsigned int shaderProgramId):x_shaderProgramId(shaderProgramId)
+TexturedMaterial::TexturedMaterial(unsigned int shaderProgramId) :x_shaderProgramId(shaderProgramId)
 {
 	this->x_shininess = 0.f;
 	x_diffuse = new Texture();
@@ -17,7 +17,7 @@ TexturedMaterial::~TexturedMaterial()
 
 void TexturedMaterial::setDiffuseTextureMap(const char* texturePath)
 {
-	
+
 	x_diffuse->id = TextureFactory::createTextureUnit(texturePath);
 	x_diffuse->path = texturePath;
 	x_diffuse->type = "diffuse";
@@ -25,7 +25,7 @@ void TexturedMaterial::setDiffuseTextureMap(const char* texturePath)
 
 void TexturedMaterial::setSpecularTextureMap(const char* texturePath)
 {
-	
+
 	x_specular->id = TextureFactory::createTextureUnit(texturePath);
 	x_specular->path = texturePath;
 	x_specular->type = "specular";
@@ -69,7 +69,7 @@ MaterialType TexturedMaterial::getMaterialType()
 
 void TexturedMaterial::x_updateUniforms()
 {
-	UniformManager::getUniformManager()->setUniform("u_material.diffuse", this->x_shaderProgramId, 0);
-	UniformManager::getUniformManager()->setUniform("u_material.specular", this->x_shaderProgramId, 1);
-	UniformManager::getUniformManager()->setUniform("u_material.shininess", this->x_shaderProgramId, this->x_shininess);
+	UniformManager::get()->setUniform("u_material.diffuse", this->x_shaderProgramId, 0);
+	UniformManager::get()->setUniform("u_material.specular", this->x_shaderProgramId, 1);
+	UniformManager::get()->setUniform("u_material.shininess", this->x_shaderProgramId, this->x_shininess);
 }

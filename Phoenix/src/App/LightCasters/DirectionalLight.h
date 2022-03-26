@@ -1,6 +1,6 @@
 #pragma once
 #include "ILight.h"
-#include "UniformManager.h"
+#include "Shaders/UniformManager.h"
 
 class DirectionalLight :public ILight
 {
@@ -9,7 +9,7 @@ public:
 	DirectionalLight(const glm::vec3& ambient,
 		const glm::vec3& diffuse,
 		const glm::vec3& specular,
-		const glm::vec3& direction,unsigned int shaderProgramId);
+		const glm::vec3& direction, unsigned int shaderProgramId);
 	~DirectionalLight();
 
 public:

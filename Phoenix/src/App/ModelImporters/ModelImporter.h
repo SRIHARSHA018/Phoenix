@@ -10,8 +10,8 @@
 #include "Mesh.h"
 #include "TextureUnit/Texture.h"
 #include "TextureUnit/TextureFactory.h"
-#include "SceneObject.h"
-#include "UniformManager.h"
+#include "Scene/SceneObject.h"
+#include "Shaders/UniformManager.h"
 
 class ModelImporter :public ISceneObject
 {

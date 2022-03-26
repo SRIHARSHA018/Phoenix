@@ -1,7 +1,7 @@
-#include "SceneManager.h"
+#include "SceneObjectManager.h"
 #include <algorithm>
 
-SceneManager::~SceneManager()
+SceneObjectManager::~SceneObjectManager()
 {
 	//TODO: save scene before deletion
 	if (this->x_sceneObjects.size() > 0) {
@@ -10,12 +10,12 @@ SceneManager::~SceneManager()
 	}
 }
 
-void SceneManager::addSceneObject(ISceneObject* obj)
+void SceneObjectManager::addSceneObject(ISceneObject* obj)
 {
 	this->x_sceneObjects.emplace_back(obj);
 }
 
-void SceneManager::removeSceneObject(ISceneObject* obj)
+void SceneObjectManager::removeSceneObject(ISceneObject* obj)
 {
 	auto it = std::find(this->x_sceneObjects.begin(), this->x_sceneObjects.end(), obj);
 	if (it != this->x_sceneObjects.end())
@@ -23,14 +23,14 @@ void SceneManager::removeSceneObject(ISceneObject* obj)
 
 }
 
-void SceneManager::updateObjects()
+void SceneObjectManager::updateObjects()
 {
 	for (auto it = this->x_sceneObjects.begin(); it != this->x_sceneObjects.end(); it++) {
 		(*it)->update();
 	}
 }
 
-void SceneManager::onEvent(IEvent& event)
+void SceneObjectManager::onEvent(IEvent& event)
 {
 	for (auto it = this->x_sceneObjects.begin(); it != this->x_sceneObjects.end(); it++) {
 		(*it)->onEvent(event);

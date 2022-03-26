@@ -2,10 +2,10 @@
 #include "SceneObject.h"
 #include <vector>
 
-class SceneManager
+class SceneObjectManager
 {
 public:
-	~SceneManager();
+	~SceneObjectManager();
 
 public:
 	void addSceneObject(ISceneObject* obj);

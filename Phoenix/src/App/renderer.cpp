@@ -3,7 +3,7 @@
 Renderer::Renderer()
 {
 	//this->x_guiManager = std::unique_ptr<GUIManager>(new GUIManager());
-	this->x_sceneManager = std::unique_ptr<SceneManager>(new SceneManager());
+	this->x_SceneObjectManager = std::unique_ptr<SceneObjectManager>(new SceneObjectManager());
 }
 void Renderer::run(GLFWwindow* window)
 {
@@ -15,7 +15,7 @@ void Renderer::run(GLFWwindow* window)
 	//TODO:CleanUp camera class
 	//TODO:Really a messy code make sure to optimize
 	camera mainCam(shader.getShaderProgramId(), glm::vec3(0.f, 0.f, 10.f));
-	mainCam.projectionMatrix = glm::perspective(glm::radians(mainCam.zoom), windowRender::getAspectRatio(window), 0.1f, 100.f);
+	mainCam.projectionMatrix = glm::perspective(glm::radians(mainCam.zoom), Window::getAspectRatio(window), 0.1f, 100.f);
 
 	//Lights stuff
 	glm::vec3 lightColor = glm::vec3(1.f);
@@ -34,14 +34,14 @@ void Renderer::run(GLFWwindow* window)
 
 	ModelImporter gun("src/res/BakedJinx/jinx.obj", shader.getShaderProgramId());
 
-	//TODO:clean stuff with sceneManager and cam
+	//TODO:clean stuff with SceneObjectManager and cam
 	//TODO:Make automatic registeration to scene eligible objects
-	this->x_sceneManager->addSceneObject(&mainCam);
-	this->x_sceneManager->addSceneObject(&directionalLight);
-	this->x_sceneManager->addSceneObject(&pointLight);
-	this->x_sceneManager->addSceneObject(&spotLight);
-	this->x_sceneManager->addSceneObject(&gun);
-	this->x_sceneManager->addSceneObject(&box);
+	this->x_SceneObjectManager->addSceneObject(&mainCam);
+	this->x_SceneObjectManager->addSceneObject(&directionalLight);
+	this->x_SceneObjectManager->addSceneObject(&pointLight);
+	this->x_SceneObjectManager->addSceneObject(&spotLight);
+	this->x_SceneObjectManager->addSceneObject(&gun);
+	this->x_SceneObjectManager->addSceneObject(&box);
 
 	//TODO:make things clean from here and optimize the GUI class
 	//GUI Manager
@@ -65,7 +65,7 @@ void Renderer::run(GLFWwindow* window)
 		spotLight.setDirection(mainCam.cameraFront);
 
 		//TODO:make clean class of scenemangaer
-		this->x_sceneManager->updateObjects();
+		this->x_SceneObjectManager->updateObjects();
 
 		//TODO:: create a GUI element for displaying.
 		//simple window style box with slider or a button 
@@ -104,7 +104,7 @@ void Renderer::initRenderSettings()
 
 void Renderer::onEvent(IEvent& event)
 {
-	this->x_sceneManager->onEvent(event);
+	this->x_SceneObjectManager->onEvent(event);
 	//this->x_guiManager->onEvent(event);
 }
 

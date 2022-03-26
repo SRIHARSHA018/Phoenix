@@ -5,21 +5,18 @@
 #define __IMPL_SET_UNIFORM(count,type,name,shaderProgramId,...) \
     glUniform##count##type(this->x_getUniformLocation(name, shaderProgramId), __VA_ARGS__);
 
-UniformManager* UniformManager::x_manager = nullptr;
-UniformManager* UniformManager::getUniformManager()
+std::shared_ptr<UniformManager> UniformManager::x_instance = NULL;
+
+
+std::shared_ptr<UniformManager>& UniformManager::get()
 {
-	if (x_manager == nullptr)
-	{
-		x_manager = new UniformManager();
-		return x_manager;
-	}
-	return x_manager;
+	if (x_instance != NULL) return x_instance;
+	x_instance = std::shared_ptr<UniformManager>(new UniformManager());
+	return x_instance;
 }
 
 UniformManager::~UniformManager()
 {
-	if (this->x_manager != NULL)
-		delete x_manager;
 }
 
 unsigned int UniformManager::x_getUniformLocation(const std::string& uniformName, unsigned int shaderProgramId)

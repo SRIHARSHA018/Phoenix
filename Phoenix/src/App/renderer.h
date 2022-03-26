@@ -1,11 +1,12 @@
 #pragma once
+
 #include "Shaders/shader.h"
-#include "SceneManager.h"
-#include "camera.h"
+#include "Scene/SceneObjectManager.h"
+#include "Camera/camera.h"
 #include "LightCasters/DirectionalLight.h"
 #include "LightCasters/PointLight.h"
 #include "LightCasters/SpotLight.h"
-#include "UniformManager.h"
+#include "Shaders/UniformManager.h"
 #include "vertexBuffers/vertexbuffer.h"
 #include "vertexBuffers/vertexArray.h"
 #include "ModelImporters/ModelImporter.h"
@@ -31,6 +32,6 @@ public:
 private:
 
 	std::unique_ptr<GUIManager> x_guiManager;
-	std::unique_ptr<SceneManager> x_sceneManager;
+	std::unique_ptr<SceneObjectManager> x_SceneObjectManager;
 
 };
