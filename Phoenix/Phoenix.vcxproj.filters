@@ -1010,15 +1010,6 @@
     <ClInclude Include="src\App\Events\MouseEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\ECS\Components\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\App\ECS\Components\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\App\ECS\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\App\GUI\IUIComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1317,6 +1308,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Window\WindowUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\ECS\ecs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\ECS\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\ECS\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
