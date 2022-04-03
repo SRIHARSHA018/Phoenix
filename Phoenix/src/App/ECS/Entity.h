@@ -8,6 +8,8 @@ public:
 		EntityIdCounter += 1;
 		id = EntityIdCounter;
 		x_componentContainers.resize(MAX_COMPONENTS);
+		x_componentContainers.shrink_to_fit();
+		x_componentTypeIdCounter = 0;
 	}
 	~Entity() {
 		this->x_mask.reset();
@@ -62,6 +64,12 @@ public:
 		return (std::static_pointer_cast<Component<T>>(x_componentContainers[index]))->component;
 	}
 
+	ComponentTypeId getUniqueComponentId() {
+		ComponentTypeId id = x_componentTypeIdCounter;
+		x_componentTypeIdCounter += 1;
+		return id;
+	}
+
 private:
 	static EntityId EntityIdCounter;
 
@@ -69,6 +77,7 @@ private:
 	ComponentMask x_mask;
 	std::vector<std::shared_ptr<IComponentContainer>> x_componentContainers;
 	std::unordered_map<const char*, ComponentTypeId> x_typeToComponentTypeId;
+	ComponentTypeId x_componentTypeIdCounter;
 
 private:
 	template<typename T>

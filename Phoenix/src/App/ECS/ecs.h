@@ -11,9 +11,3 @@
 using EntityId = unsigned long long;
 using ComponentTypeId = unsigned long long;
 using ComponentMask = std::bitset<MAX_COMPONENTS>;
-static ComponentTypeId ComponentTypeIdCounter = 0;
-
-ComponentTypeId getUniqueComponentId() {
-	ComponentTypeIdCounter += 1;
-	return ComponentTypeIdCounter;
-}
