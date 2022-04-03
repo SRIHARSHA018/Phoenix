@@ -7,8 +7,6 @@ public:
 };
 
 template<typename T>
-class Component : public IComponentContainer {
-public:
-	Component() = default;
+struct Component : public IComponentContainer {
 	T component;
 };
