@@ -554,6 +554,7 @@
     <ClInclude Include="src\App\ECS\Component.h" />
     <ClInclude Include="src\App\ECS\ecs.h" />
     <ClInclude Include="src\App\ECS\Entity.h" />
+    <ClInclude Include="src\App\ECS\System.h" />
     <ClInclude Include="src\App\Materials\IMaterial.h" />
     <ClInclude Include="src\App\Materials\StandardMaterial.h" />
     <ClInclude Include="src\App\Materials\TexturedMaterial.h" />

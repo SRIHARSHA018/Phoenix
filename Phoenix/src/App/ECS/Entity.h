@@ -9,13 +9,11 @@ public:
 		id = EntityIdCounter;
 		x_componentContainers.resize(MAX_COMPONENTS);
 		x_componentContainers.shrink_to_fit();
-		x_componentTypeIdCounter = 0;
 	}
 	~Entity() {
 		this->x_mask.reset();
 		this->x_componentContainers.clear();
 		this->x_componentContainers.shrink_to_fit();
-		this->x_typeToComponentTypeId.clear();
 	}
 
 public:
@@ -23,51 +21,28 @@ public:
 
 	template<typename T>
 	void attachComponent() {
-		const char* type = typeid(T).name();
-		if (x_typeToComponentTypeId.find(type) == x_typeToComponentTypeId.end()) {
-			x_typeToComponentTypeId[type] = getUniqueComponentId();
-			x_mask.set(x_typeToComponentTypeId[type], true);
-			x_componentContainers[x_typeToComponentTypeId[type]] = std::make_shared<Component<T>>();
-		}
-		else {
-			std::cout << "Component already attached\n";
-		}
+		x_mask.set(getComponentTypeID<T>(), true);
+		x_componentContainers[getComponentTypeID<T>()] = std::make_shared<Component<T>>();
 	}
 
 	template<typename T>
 	void detachComponent() {
-		const char* type = typeid(T).name();
-		if (x_typeToComponentTypeId.find(type) != x_typeToComponentTypeId.end()) {
-			x_typeToComponentTypeId.erase(type);
-			x_mask.set(x_typeToComponentTypeId[type], false);
-		}
-		else {
-			std::cout << "Component already Detached\n";
-		}
+		x_componentContainers[getComponentTypeID<T>()].reset();
+		x_mask.set(getComponentTypeID<T>(), false);
 	}
 
 	template<typename T>
 	bool hasComponent() {
-		if (x_hasComponent<T>()) {
-			return true;
-		}
-		std::cout << "Component is not present\n";
-		return false;
+		return x_mask.test(getComponentTypeID<T>());
 	}
 
 	template<typename T>
 	T& getComponent() {
-		ComponentTypeId index;
+		ComponentTypeId index = -1;
 		if (hasComponent<T>()) {
-			index = x_typeToComponentTypeId[typeid(T).name()];
+			index = getComponentTypeID<T>();
 		}
 		return (std::static_pointer_cast<Component<T>>(x_componentContainers[index]))->component;
-	}
-
-	ComponentTypeId getUniqueComponentId() {
-		ComponentTypeId id = x_componentTypeIdCounter;
-		x_componentTypeIdCounter += 1;
-		return id;
 	}
 
 private:
@@ -76,14 +51,5 @@ private:
 private:
 	ComponentMask x_mask;
 	std::vector<std::shared_ptr<IComponentContainer>> x_componentContainers;
-	std::unordered_map<const char*, ComponentTypeId> x_typeToComponentTypeId;
-	ComponentTypeId x_componentTypeIdCounter;
-
-private:
-	template<typename T>
-	bool x_hasComponent() {
-		const char* type = typeid(T).name();
-		return (x_typeToComponentTypeId.find(type) != x_typeToComponentTypeId.end()) && (x_mask.test(x_typeToComponentTypeId[type]));
-	}
 };
 EntityId Entity::EntityIdCounter = 0;

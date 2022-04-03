@@ -1319,6 +1319,9 @@
     <ClInclude Include="src\App\ECS\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\App\ECS\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\libraries\x64\glfw3.lib" />
