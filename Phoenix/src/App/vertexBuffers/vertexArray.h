@@ -2,9 +2,9 @@
 
 #include <GLEW/glew.h>
 #include <vector>
-struct BufferLayout 
+struct BufferLayout
 {
-	unsigned int numElements;
+	unsigned int num_elements;
 	unsigned int type;
 	bool normalized;
 	static unsigned int getTypeSize(unsigned int type) {
@@ -20,17 +20,17 @@ struct BufferLayout
 	}
 };
 
-class vertexArray
+class VertexArray
 {
 private:
-	unsigned int x_vertexArrayId;
-	unsigned int x_attributeCount;
+	unsigned int x_vertex_array_id;
+	unsigned int x_attribute_count;
 	unsigned int x_stride;
 	std::vector<BufferLayout> x_layouts;
 
 public:
-	vertexArray(unsigned int arrayCount =1);
-	~vertexArray();
+	VertexArray(unsigned int array_count = 1);
+	~VertexArray();
 
 public:
 	unsigned int getAttributeCount();

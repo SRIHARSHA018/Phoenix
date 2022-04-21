@@ -13,9 +13,9 @@ enum class CheckType
 };
 
 class ShaderUtils {
-	public:
-		static unsigned int  buildShaderFromFile(const char* filepath, GLenum shaderType);
-		static unsigned int  buildShaderProgram(unsigned int vertexShaderId, unsigned int fragmentShaderId);
+public:
+	static unsigned int  buildShaderFromFile(const char* file_path, GLenum shader_type);
+	static unsigned int  buildShaderProgram(unsigned int vertex_shader_id, unsigned int fragment_shader_id);
 private:
-		static void x_checkErrors(unsigned int id,CheckType type);
+	static void x_checkErrors(unsigned int id, CheckType type);
 };

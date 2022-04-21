@@ -1,57 +1,57 @@
-#include "vertexArray.h"
+#include "VertexArray.h"
 
 
-vertexArray::vertexArray(unsigned int arrayCount):x_attributeCount(0),x_stride(0)
+VertexArray::VertexArray(unsigned int array_count) :x_attribute_count(0), x_stride(0)
 {
-	glGenVertexArrays(arrayCount, &this->x_vertexArrayId);
+	glGenVertexArrays(array_count, &this->x_vertex_array_id);
 }
 
-vertexArray::~vertexArray()
+VertexArray::~VertexArray()
 {
-	glDeleteVertexArrays(1, &this->x_vertexArrayId);
+	glDeleteVertexArrays(1, &this->x_vertex_array_id);
 }
 
-unsigned int vertexArray::getAttributeCount()
+unsigned int VertexArray::getAttributeCount()
 {
-	return this->x_attributeCount;
+	return this->x_attribute_count;
 }
 
-unsigned int vertexArray::getVertexArrayId()
+unsigned int VertexArray::getVertexArrayId()
 {
-	return this->x_vertexArrayId;
+	return this->x_vertex_array_id;
 }
 
-void vertexArray::bindVertexArray()
+void VertexArray::bindVertexArray()
 {
-	glBindVertexArray(this->x_vertexArrayId);
+	glBindVertexArray(this->x_vertex_array_id);
 }
 
-void vertexArray::unbindVertexArray()
+void VertexArray::unbindVertexArray()
 {
 	glBindVertexArray(0);
 }
 
-void vertexArray::pushBufferLayout(BufferLayout layout)
+void VertexArray::pushBufferLayout(BufferLayout layout)
 {
 	this->x_layouts.emplace_back(layout);
-	this->x_stride += layout.numElements * BufferLayout::getTypeSize(layout.type);
-	this->x_attributeCount += 1;
+	this->x_stride += layout.num_elements * BufferLayout::getTypeSize(layout.type);
+	this->x_attribute_count += 1;
 }
 
-void vertexArray::setupAndEnableAttributes()
+void VertexArray::setupAndEnableAttributes()
 {
-	unsigned int offset =0;
-	for (unsigned int i = 0; i < x_layouts.size(); i++) 
+	unsigned int offset = 0;
+	for (unsigned int i = 0; i < x_layouts.size(); i++)
 	{
 		const auto& layout = x_layouts[i];
 		glEnableVertexAttribArray(i);
 		if (GL_INT == layout.type) {
-			glVertexAttribIPointer(i, layout.numElements, layout.type, this->x_stride, (void*)offset);
+			glVertexAttribIPointer(i, layout.num_elements, layout.type, this->x_stride, (void*)offset);
 		}
 		else {
-			glVertexAttribPointer(i,layout.numElements , layout.type, layout.normalized,this->x_stride , (void*)offset);
+			glVertexAttribPointer(i, layout.num_elements, layout.type, layout.normalized, this->x_stride, (void*)offset);
 		}
-		offset += layout.numElements * BufferLayout::getTypeSize(layout.type);
+		offset += layout.num_elements * BufferLayout::getTypeSize(layout.type);
 	}
 	this->x_layouts.clear();
 }

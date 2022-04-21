@@ -5,11 +5,11 @@
 class DirectionalLight :public ILight
 {
 public:
-	DirectionalLight(unsigned int shaderProgramId);
+	DirectionalLight(unsigned int shader_program_id);
 	DirectionalLight(const glm::vec3& ambient,
 		const glm::vec3& diffuse,
 		const glm::vec3& specular,
-		const glm::vec3& direction, unsigned int shaderProgramId);
+		const glm::vec3& direction, unsigned int shader_program_id);
 	~DirectionalLight();
 
 public:
@@ -19,5 +19,5 @@ private:
 	void x_updateUniforms();
 private:
 	glm::vec3 x_direction;
-	unsigned int x_shaderProgramId;
+	unsigned int x_shader_program_id;
 };

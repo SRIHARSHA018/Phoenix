@@ -8,11 +8,11 @@
 #include "Events/MouseEvent.h"
 
 
-struct windowProperties
+struct WindowProperties
 {
-	unsigned int  mainWindowWidth = 1280;
-	unsigned int  mainWindowHeight = 720;
-	std::string mainWindowTitle = "Phoenix";
-	eventCallbackFunc eventCallback;
+	unsigned int  main_window_width = 1280;
+	unsigned int  main_window_height = 720;
+	std::string main_window_title = "Phoenix";
+	EventCallbackFunc event_callback;
 };
 

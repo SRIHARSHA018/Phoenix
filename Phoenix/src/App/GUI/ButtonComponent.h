@@ -1,11 +1,11 @@
 #pragma once
 #include<GLEW/glew.h>
 #include <GLFW/glfw3.h>
-#include "Window/windowRender.h"
+#include "Window/WindowRender.h"
 #include "IUIComponent.h"
 #include "Events/MouseEvent.h"
-#include "vertexBuffers/vertexbuffer.h"
-#include "Shaders/shader.h"
+#include "VertexBuffers/Vertexbuffer.h"
+#include "Shaders/Shader.h"
 #include "Shaders/UniformManager.h"
 
 class ButtonComponent :public IUIComponent {
@@ -30,15 +30,15 @@ public:
 	glm::mat4 getProjectionMatrix();
 
 public:
-	int winwidth, winHeight;
+	int win_width, win_height;
 	UIElementProps props;
-	Shader* UIshader;
+	Shader* UI_shader;
 	//TODO::vertex arrays and other stuff need to be decoupled and maintainable
 	//TODO:Make it flexible so we can use.
 	unsigned int vao, vbo, ibo;
 
 private:
-	glm::mat4 x_modelMatrix;
-	glm::mat4 x_projectionMatrix;
+	glm::mat4 x_model_matrix;
+	glm::mat4 x_projection_matrix;
 
 };

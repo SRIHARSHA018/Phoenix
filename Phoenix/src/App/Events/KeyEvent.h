@@ -3,23 +3,23 @@
 #include "Event.h"
 
 
-class keyPressedEvent:public IEvent
+class KeyPressedEvent :public IEvent
 {
 public:
-	keyPressedEvent(const unsigned int keyCode,const unsigned int repeatCount) :x_keyCode(keyCode),x_repeatCount(repeatCount) {}
+	KeyPressedEvent(const unsigned int key_code, const unsigned int repeat_count) :x_key_code(key_code), x_repeat_count(repeat_count) {}
 	EventType getEventType() const  override { return EventType::KEY_PRESSED; }
-	unsigned int getKeyCode() const { return x_keyCode; }
-	unsigned int getRepeatCount() const { return x_repeatCount; }
+	unsigned int getKeyCode() const { return x_key_code; }
+	unsigned int getRepeatCount() const { return x_repeat_count; }
 private:
-	unsigned int x_keyCode,x_repeatCount;
+	unsigned int x_key_code, x_repeat_count;
 };
 
-class keyReleasedEvent :public IEvent
+class KeyReleasedEvent :public IEvent
 {
 public:
-	keyReleasedEvent(const unsigned int keyCode) :x_keyCode(keyCode) {}
+	KeyReleasedEvent(const unsigned int key_code) :x_key_code(key_code) {}
 	EventType getEventType() const override { return EventType::KEY_RELEASED; }
-	unsigned int getKeyCode() const { return x_keyCode; }
+	unsigned int getKeyCode() const { return x_key_code; }
 private:
-	unsigned int x_keyCode;
+	unsigned int x_key_code;
 };

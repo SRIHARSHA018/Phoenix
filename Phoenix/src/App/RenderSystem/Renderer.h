@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Shaders/shader.h"
+#include "Shaders/Shader.h"
 #include "Scene/SceneObjectManager.h"
-#include "Camera/camera.h"
+#include "Camera/Camera.h"
 #include "LightCasters/DirectionalLight.h"
 #include "LightCasters/PointLight.h"
 #include "LightCasters/SpotLight.h"
 #include "Shaders/UniformManager.h"
-#include "vertexBuffers/vertexbuffer.h"
-#include "vertexBuffers/vertexArray.h"
+#include "VertexBuffers/Vertexbuffer.h"
+#include "VertexBuffers/VertexArray.h"
 #include "ModelImporters/ModelImporter.h"
 #include "Materials/TexturedMaterial.h"
 #include "GUI/ButtonComponent.h"
@@ -31,7 +31,7 @@ public:
 
 private:
 
-	std::unique_ptr<GUIManager> x_guiManager;
-	std::unique_ptr<SceneObjectManager> x_SceneObjectManager;
+	std::unique_ptr<GUIManager> x_gui_manager;
+	std::unique_ptr<SceneObjectManager> x_scene_object_manager;
 
 };

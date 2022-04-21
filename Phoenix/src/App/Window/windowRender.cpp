@@ -1,5 +1,5 @@
-#include "windowRender.h"
-#include "vertexBuffers/vertexbuffer.h"
+#include "WindowRender.h"
+#include "VertexBuffers/Vertexbuffer.h"
 
 void errorCallback(int errorCode, const char* description)
 {
@@ -25,113 +25,113 @@ void Window::x_init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	this->x_mainWindow = glfwCreateWindow(winProps.mainWindowWidth,
-		winProps.mainWindowHeight,
-		winProps.mainWindowTitle.c_str(),
+	this->x_main_window = glfwCreateWindow(win_props.main_window_width,
+		win_props.main_window_height,
+		win_props.main_window_title.c_str(),
 		nullptr, nullptr);
 
-	if (this->x_mainWindow == nullptr)
+	if (this->x_main_window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		shutDown();
 	}
 	else
 	{
-		glfwMakeContextCurrent(this->x_mainWindow);
+		glfwMakeContextCurrent(this->x_main_window);
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Failed to initialize GLEW" << std::endl;
 			shutDown();
 		}
 		glfwSetErrorCallback(errorCallback);
-		glfwSetWindowUserPointer(this->x_mainWindow, this);
+		glfwSetWindowUserPointer(this->x_main_window, this);
 
 		// TODO: refine resize callback 
-		glfwSetFramebufferSizeCallback(this->x_mainWindow, [](GLFWwindow* window, int width, int height) {
+		glfwSetFramebufferSizeCallback(this->x_main_window, [](GLFWwindow* window, int width, int height) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 			windowUserPointer->setWindowProperties(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
 			glViewport(0, 0, static_cast<unsigned int>(width), static_cast<unsigned int>(height));
 			WindowResizeEvent event(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
-			windowUserPointer->winProps.eventCallback(event);
+			windowUserPointer->win_props.event_callback(event);
 			});
-		glfwSetWindowCloseCallback(this->x_mainWindow, [](GLFWwindow* window) {
+		glfwSetWindowCloseCallback(this->x_main_window, [](GLFWwindow* window) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 			WindowCloseEvent event;
-			windowUserPointer->winProps.eventCallback(event);
+			windowUserPointer->win_props.event_callback(event);
 			});
-		glfwSetKeyCallback(this->x_mainWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		glfwSetKeyCallback(this->x_main_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 
 			switch (action)
 			{
 			case GLFW_PRESS:
 			{
-				keyPressedEvent event(key, 0);
-				windowUserPointer->winProps.eventCallback(event);
+				KeyPressedEvent event(key, 0);
+				windowUserPointer->win_props.event_callback(event);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				keyReleasedEvent event(key);
-				windowUserPointer->winProps.eventCallback(event);
+				KeyReleasedEvent event(key);
+				windowUserPointer->win_props.event_callback(event);
 				break;
 			}
 			case GLFW_REPEAT:
 			{
-				keyPressedEvent event(key, 1);
-				windowUserPointer->winProps.eventCallback(event);
+				KeyPressedEvent event(key, 1);
+				windowUserPointer->win_props.event_callback(event);
 				break;
 			}
 			default:
 				break;
 			}
 			});
-		glfwSetCursorPosCallback(this->x_mainWindow, [](GLFWwindow* window, double xpos, double ypos) {
+		glfwSetCursorPosCallback(this->x_main_window, [](GLFWwindow* window, double xpos, double ypos) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 			MouseMovedEvent event(static_cast<float>(xpos), static_cast<float>(ypos));
-			windowUserPointer->winProps.eventCallback(event);
+			windowUserPointer->win_props.event_callback(event);
 			});
-		glfwSetMouseButtonCallback(this->x_mainWindow, [](GLFWwindow* window, int button, int action, int mods) {
+		glfwSetMouseButtonCallback(this->x_main_window, [](GLFWwindow* window, int button, int action, int mods) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 			switch (action)
 			{
 			case GLFW_PRESS:
 			{
 				MouseButtonClickedEvent event(button);
-				windowUserPointer->winProps.eventCallback(event);
+				windowUserPointer->win_props.event_callback(event);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
 				MouseButtonReleasedEvent event(button);
-				windowUserPointer->winProps.eventCallback(event);
+				windowUserPointer->win_props.event_callback(event);
 				break;
 			}
 			}
 			});
-		glfwSetScrollCallback(this->x_mainWindow, [](GLFWwindow* window, double xoffset, double yoffset) {
+		glfwSetScrollCallback(this->x_main_window, [](GLFWwindow* window, double xoffset, double yoffset) {
 			auto windowUserPointer = (Window*)(glfwGetWindowUserPointer(window));
 			MouseScrolledEvent event(static_cast<float>(xoffset), static_cast<float>(yoffset));
-			windowUserPointer->winProps.eventCallback(event);
+			windowUserPointer->win_props.event_callback(event);
 			});
 
 	}
 }
 
-void Window::setWindowProperties(windowProperties props)
+void Window::setWindowProperties(WindowProperties props)
 {
-	winProps.mainWindowWidth = props.mainWindowWidth;
-	winProps.mainWindowHeight = props.mainWindowHeight;
-	winProps.mainWindowTitle = props.mainWindowTitle;
+	win_props.main_window_width = props.main_window_width;
+	win_props.main_window_height = props.main_window_height;
+	win_props.main_window_title = props.main_window_title;
 }
 void Window::setWindowProperties(unsigned int width, unsigned int height)
 {
-	winProps.mainWindowWidth = width;
-	winProps.mainWindowHeight = height;
+	win_props.main_window_width = width;
+	win_props.main_window_height = height;
 }
-void Window::setEventCallback(const eventCallbackFunc& func)
+void Window::setEventCallback(const EventCallbackFunc& func)
 {
-	winProps.eventCallback = func;
+	win_props.event_callback = func;
 }
 std::shared_ptr<Window>& Window::get()
 {
@@ -147,6 +147,6 @@ float Window::getAspectRatio(GLFWwindow* window)
 }
 void Window::shutDown()
 {
-	glfwDestroyWindow(this->x_mainWindow);
+	glfwDestroyWindow(this->x_main_window);
 	glfwTerminate();
 }

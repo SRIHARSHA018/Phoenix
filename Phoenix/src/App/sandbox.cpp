@@ -1,8 +1,8 @@
 #include "sandbox.h"
 
-std::shared_ptr<sandBox> sandBox::x_instance = NULL;
+std::shared_ptr<SandBox> SandBox::x_instance = NULL;
 
-void sandBox::init()
+void SandBox::init()
 {
 	this->x_setupWindowRender();
 
@@ -11,80 +11,44 @@ void sandBox::init()
 	this->x_setupInputController();
 
 }
-void sandBox::run()
+void SandBox::run()
 {
-	this->x_renderer->run(this->x_windowRender->getMainWindow());
+	this->x_renderer->run(this->x_window_render->getMainWindow());
 }
 
-GLFWwindow* sandBox::getWindow()
+GLFWwindow* SandBox::getWindow()
 {
-	return this->x_windowRender->getMainWindow();
+	return this->x_window_render->getMainWindow();
 }
 
-std::shared_ptr<sandBox>& sandBox::get()
+std::shared_ptr<SandBox>& SandBox::get()
 {
 	if (x_instance != NULL) return x_instance;
-	x_instance = std::shared_ptr<sandBox>(new sandBox());
+	x_instance = std::shared_ptr<SandBox>(new SandBox());
 	return x_instance;
 }
 
-void sandBox::x_setupWindowRender()
+void SandBox::x_setupWindowRender()
 {
-	this->x_windowRender = Window::get();
-	this->x_windowRender->setEventCallback(std::bind(&sandBox::onEvent, this, std::placeholders::_1));
+	this->x_window_render = Window::get();
+	this->x_window_render->setEventCallback(std::bind(&SandBox::onEvent, this, std::placeholders::_1));
 }
-void sandBox::x_setupRenderer()
+void SandBox::x_setupRenderer()
 {
 	this->x_renderer = std::unique_ptr<Renderer>(new Renderer());
 }
-void sandBox::x_setupInputController()
+void SandBox::x_setupInputController()
 {
-	if (this->x_windowRender != NULL) {
-		this->x_inputController = std::unique_ptr<InputControls>(new InputControls(this->x_windowRender->getMainWindow()));
+	if (this->x_window_render != NULL) {
+		this->x_input_controller = std::unique_ptr<InputControls>(new InputControls(this->x_window_render->getMainWindow()));
 	}
 }
 
-void sandBox::onEvent(IEvent& e)
+void SandBox::onEvent(IEvent& e)
 {
-	//switch (e.getEventType())
-	//{
-	//case EventType::WINDOW_RESIZE:
-	//    std::cout << "window resize Event\n";
-	//    break;
-	//case EventType::WINDOW_CLOSE:
-	//    std::cout << "Window close Event\n";
-	//    break;
-	//case EventType::KEY_PRESSED:
-	//    std::cout << "key pressed Event\n";
-	//    if (InputControls::isKeyPressed(GLFW_KEY_ESCAPE)) {
-	//        glfwSetWindowShouldClose(this->x_windowRender->getMainWindow(), true);
-	//    }
-	//    break;
-	//case EventType::KEY_REPEAT:
-	//    std::cout << "key Repeat Event\n";
-	//    break;
-	//case EventType::KEY_RELEASED:
-	//    std::cout << "key released Event\n";
-	//    break;
-	//case EventType::MOUSE_MOVED:
-	//    std::cout << "Mouse Moved Event\n";
-	//    break;
-	//case EventType::MOUSE_BUTTON_CLICKED:
-	//    std::cout << "Mouse Button clicked Event\n";
-	//    break;
-	//case EventType::MOUSE_BUTTON_RELEASED:
-	//    std::cout << "Mouse Button Released Event\n";
-	//    break;
-	//case EventType::MOUSE_SCROLLED:
-	//    std::cout << "Mouse Scrolled Event\n";
-	//    break;
-	//default:
-	//    break;
-	//}
 	this->x_renderer->onEvent(e);
-
 }
 
-sandBox::~sandBox()
+SandBox::~SandBox()
 {
 }

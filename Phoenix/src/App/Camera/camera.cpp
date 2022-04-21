@@ -1,97 +1,97 @@
-#include "camera.h"
-#include "global.h"
+#include "Camera.h"
+#include "Global.h"
 #include<iostream>
 
-camera::camera(unsigned int shaderProgramId, glm::vec3 position, glm::vec3 up, glm::vec3 front, float movementSpeed, float zoomVal, float sensitivity, float yaw, float pitch)
-	:cameraPosition(position), cameraUp(up), cameraFront(front),
-	cameraMovementSpeed(movementSpeed), zoom(zoomVal), cameraRotationSensitivity(sensitivity),
-	cameraYaw(yaw), cameraPitch(pitch), x_shaderProgramId(shaderProgramId)
+Camera::Camera(unsigned int shader_program_id, glm::vec3 position, glm::vec3 up, glm::vec3 front, float movement_speed, float zoom_val, float sensitivity, float yaw, float pitch)
+	:camera_position(position), camera_up(up), camera_front(front),
+	camera_movement_speed(movement_speed), zoom(zoom_val), camera_rotation_sensitivity(sensitivity),
+	camera_yaw(yaw), camera_pitch(pitch), x_shader_program_id(shader_program_id)
 {
-	firstMouseMovement = true;
-	modelMatrix = glm::mat4(1.0f);
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, 0.f, -10.f));
+	first_mouse_movement = true;
+	model_matrix = glm::mat4(1.0f);
+	model_matrix = glm::translate(model_matrix, glm::vec3(0.f, 0.f, -10.f));
 	x_updateCameraVectors();
-	projectionMatrix = glm::mat4(1.0f);
+	projection_matrix = glm::mat4(1.0f);
 }
 
-void camera::moveForward()
+void Camera::moveForward()
 {
 
-	cameraPosition += cameraMovementSpeed * Time::getDeltaTime() * cameraFront;
+	camera_position += camera_movement_speed * Time::getDeltaTime() * camera_front;
 }
 
-void camera::moveBackward()
+void Camera::moveBackward()
 {
-	cameraPosition -= cameraMovementSpeed * Time::getDeltaTime() * cameraFront;
+	camera_position -= camera_movement_speed * Time::getDeltaTime() * camera_front;
 }
 
-void camera::moveRight()
+void Camera::moveRight()
 {
-	cameraPosition += cameraMovementSpeed * Time::getDeltaTime() * glm::normalize(glm::cross(cameraFront, worldUp));
+	camera_position += camera_movement_speed * Time::getDeltaTime() * glm::normalize(glm::cross(camera_front, world_up));
 }
-void camera::moveLeft()
+void Camera::moveLeft()
 {
-	cameraPosition -= cameraMovementSpeed * Time::getDeltaTime() * glm::normalize(glm::cross(cameraFront, worldUp));
+	camera_position -= camera_movement_speed * Time::getDeltaTime() * glm::normalize(glm::cross(camera_front, world_up));
 }
 
-void camera::processScrollWheel(float val)
+void Camera::processScrollWheel(float val)
 {
 	zoom -= static_cast<float>(val);
 	if (zoom < 1.0f) zoom = 1.f;
 	if (zoom > 45.f) zoom = 45.f;
 }
 
-void camera::processCursorMovement(float xPos, float yPos)
+void Camera::processCursorMovement(float xPos, float yPos)
 {
 	float xPosIn = static_cast<float>(xPos);
 	float yPosIn = static_cast<float>(yPos);
-	if (firstMouseMovement) {
-		lastCursorXPos = xPosIn;
-		lastCursorYPos = yPosIn;
-		firstMouseMovement = false;
+	if (first_mouse_movement) {
+		last_cursor_x_pos = xPosIn;
+		last_cursor_y_pos = yPosIn;
+		first_mouse_movement = false;
 	}
-	float xoff = xPosIn - lastCursorXPos;
-	float yoff = lastCursorYPos - yPosIn;
+	float xoff = xPosIn - last_cursor_x_pos;
+	float yoff = last_cursor_y_pos - yPosIn;
 
-	lastCursorXPos = xPosIn;
-	lastCursorYPos = yPosIn;
+	last_cursor_x_pos = xPosIn;
+	last_cursor_y_pos = yPosIn;
 	this->x_processCursorMovement(xoff, yoff);
 }
 
-void camera::update()
+void Camera::update()
 {
 	if (InputControls::isKeyPressed(GLFW_KEY_W)) moveForward();
 	if (InputControls::isKeyPressed(GLFW_KEY_A)) moveLeft();
 	if (InputControls::isKeyPressed(GLFW_KEY_D)) moveRight();
 	if (InputControls::isKeyPressed(GLFW_KEY_S)) moveBackward();
 	if (InputControls::isKeyReleased(GLFW_KEY_LEFT_ALT)) {
-		this->firstMouseMovement = true;
+		this->first_mouse_movement = true;
 	}
 	this->x_updateUniforms();
 }
-void camera::x_updateUniforms()
+void Camera::x_updateUniforms()
 {
-	UniformManager::get()->setUniformVec3("u_viewPosition", this->x_shaderProgramId, glm::value_ptr(this->cameraPosition));
-	UniformManager::get()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->modelMatrix));
-	UniformManager::get()->setUniformMatrix4fv("view", this->x_shaderProgramId, glm::value_ptr(this->getViewMatrix()));
-	UniformManager::get()->setUniformMatrix4fv("proj", this->x_shaderProgramId, glm::value_ptr(this->projectionMatrix));
+	UniformManager::get()->setUniformVec3("u_viewPosition", this->x_shader_program_id, glm::value_ptr(this->camera_position));
+	UniformManager::get()->setUniformMatrix4fv("model", this->x_shader_program_id, glm::value_ptr(this->model_matrix));
+	UniformManager::get()->setUniformMatrix4fv("view", this->x_shader_program_id, glm::value_ptr(this->getViewMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("proj", this->x_shader_program_id, glm::value_ptr(this->projection_matrix));
 }
 
-void camera::x_processCursorMovement(float xoff, float yoff, bool constrain)
+void Camera::x_processCursorMovement(float xoff, float yoff, bool constrain)
 {
-	xoff *= cameraRotationSensitivity;
-	yoff *= cameraRotationSensitivity;
+	xoff *= camera_rotation_sensitivity;
+	yoff *= camera_rotation_sensitivity;
 
-	cameraYaw += xoff;
-	cameraPitch += yoff;
+	camera_yaw += xoff;
+	camera_pitch += yoff;
 
 	if (constrain) {
-		if (cameraPitch > 89.f) cameraPitch = 89.f;
-		if (cameraPitch < -89.f) cameraPitch = -89.f;
+		if (camera_pitch > 89.f) camera_pitch = 89.f;
+		if (camera_pitch < -89.f) camera_pitch = -89.f;
 	}
 	x_updateCameraVectors();
 }
-void camera::onEvent(IEvent& event)
+void Camera::onEvent(IEvent& event)
 {
 	switch (event.getEventType()) {
 	case EventType::MOUSE_MOVED:
@@ -109,30 +109,30 @@ void camera::onEvent(IEvent& event)
 	case EventType::WINDOW_RESIZE:
 	{
 		auto windowResizeEvent = static_cast<WindowResizeEvent&>(event);
-		auto aspectRatio = (float)windowResizeEvent.getWidth() / (float)windowResizeEvent.getHeight();
+		auto aspect_ratio = (float)windowResizeEvent.getWidth() / (float)windowResizeEvent.getHeight();
 
-		x_updateProjectionMatrix(aspectRatio);
+		x_updateProjectionMatrix(aspect_ratio);
 		break;
 	}
 	default:break;
 	}
 }
-void camera::x_updateCameraVectors()
+void Camera::x_updateCameraVectors()
 {
 	glm::vec3 front;
-	front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-	front.y = sin(glm::radians(cameraPitch));
-	front.z = sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-	cameraFront = glm::normalize(front);
+	front.x = cos(glm::radians(camera_yaw)) * cos(glm::radians(camera_pitch));
+	front.y = sin(glm::radians(camera_pitch));
+	front.z = sin(glm::radians(camera_yaw)) * cos(glm::radians(camera_pitch));
+	camera_front = glm::normalize(front);
 }
-void camera::x_updateProjectionMatrix(float aspectRatio)
+void Camera::x_updateProjectionMatrix(float aspect_ratio)
 {
-	projectionMatrix = glm::mat4(1.0f);
-	projectionMatrix = glm::perspective(glm::radians(this->zoom), aspectRatio, 0.1f, 100.0f);
+	projection_matrix = glm::mat4(1.0f);
+	projection_matrix = glm::perspective(glm::radians(this->zoom), aspect_ratio, 0.1f, 100.0f);
 }
-glm::mat4 camera::getViewMatrix()
+glm::mat4 Camera::getViewMatrix()
 {
-	return glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
+	return glm::lookAt(camera_position, camera_position + camera_front, camera_up);
 }
 
 

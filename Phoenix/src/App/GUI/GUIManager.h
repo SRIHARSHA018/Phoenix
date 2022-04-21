@@ -11,5 +11,5 @@ public:
 	void UpdateUIComponents();
 	void onEvent(IEvent& event);
 private:
-	std::vector<IUIComponent*> x_uiComponents;
+	std::vector<IUIComponent*> x_ui_components;
 };

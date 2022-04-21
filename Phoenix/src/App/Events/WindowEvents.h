@@ -3,12 +3,12 @@
 
 
 
-using eventCallbackFunc = std::function<void(IEvent&)>;
+using EventCallbackFunc = std::function<void(IEvent&)>;
 class WindowResizeEvent : public IEvent
 {
 public:
-	WindowResizeEvent(unsigned int width,unsigned int height):x_width(width),x_height(height) {}
-	~WindowResizeEvent(){}
+	WindowResizeEvent(unsigned int width, unsigned int height) :x_width(width), x_height(height) {}
+	~WindowResizeEvent() {}
 
 	virtual EventType getEventType() const override {
 		return EventType::WINDOW_RESIZE;

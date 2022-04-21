@@ -3,34 +3,33 @@
 #include <GLFW/glfw3.h>
 #include<memory>
 
-#include "Window/windowRender.h"
+#include "Window/WindowRender.h"
 #include "InputControls.h"
-#include "renderer.h"
+#include "RenderSystem/Renderer.h"
 
-class sandBox
+class SandBox
 {
-	sandBox() {}
+	SandBox() {}
 public:
 
-	sandBox& operator=(const sandBox&) = delete;
-	sandBox(const sandBox&) = delete;
+	SandBox& operator=(const SandBox&) = delete;
+	SandBox(const SandBox&) = delete;
 
-	~sandBox();
+	~SandBox();
 public:
 	void init();
 	void onEvent(IEvent& e);
 	void run();
 
-	static std::shared_ptr<sandBox>& get();
+	static std::shared_ptr<SandBox>& get();
 
 	GLFWwindow* getWindow();
 
 private:
-	std::shared_ptr<Window> x_windowRender;
-	std::unique_ptr<InputControls> x_inputController;
+	std::shared_ptr<Window> x_window_render;
+	std::unique_ptr<InputControls> x_input_controller;
 	std::unique_ptr<Renderer> x_renderer;
-
-	static std::shared_ptr<sandBox> x_instance;
+	static std::shared_ptr<SandBox> x_instance;
 
 private:
 	void x_setupWindowRender();

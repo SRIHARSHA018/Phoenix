@@ -18,9 +18,9 @@ struct LightProps {
 class ILight :public ISceneObject
 {
 public:
-	ILight() :properties(LightProps()) {}
+	ILight() :light_properties(LightProps()) {}
 	ILight(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
-		:properties({ ambient,diffuse,specular }) {}
+		:light_properties({ ambient,diffuse,specular }) {}
 
 	virtual ~ILight() {}
 
@@ -28,5 +28,5 @@ public:
 	virtual void update() = 0;
 	virtual void onEvent(IEvent& event) = 0;
 public:
-	LightProps properties;
+	LightProps light_properties;
 };

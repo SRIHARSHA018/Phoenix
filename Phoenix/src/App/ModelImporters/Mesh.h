@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "Materials/TexturedMaterial.h"
-#include "vertexBuffers/vertexArray.h"
-#include "vertexBuffers/vertexBuffer.h"
-#include "vertexBuffers/indexBuffer.h"
+#include "VertexBuffers/VertexArray.h"
+#include "VertexBuffers/VertexBuffer.h"
+#include "VertexBuffers/IndexBuffer.h"
 #include "Shaders/UniformManager.h"
 
 #define MAX_BONE_INFLUENCE 4
@@ -17,11 +17,11 @@
 struct Vertex
 {
 
-	glm::vec3 Position;
+	glm::vec3 position;
 
-	glm::vec2 TexCoords;
+	glm::vec2 tex_coords;
 
-	glm::vec3 Normal;
+	glm::vec3 normal;
 
 	//glm::vec3 Tangent;
 
@@ -38,17 +38,17 @@ public:
 	Mesh();
 	~Mesh();
 public:
-	void draw(unsigned int shaderProgramId);
-	std::string meshName;
+	void draw(unsigned int shader_program_id);
+	std::string mesh_name;
 
 public:
 	std::vector<Vertex>       vertices;
 	std::vector<unsigned int> indices;
 	std::vector<Texture>      textures;
 
-	vertexArray vao;
-	vertexBuffer vbo;
-	indexBuffer ibo;
+	VertexArray vao;
+	VertexBuffer vbo;
+	IndexBuffer ibo;
 
 	unsigned int Vao, Vbo, Ibo;
 

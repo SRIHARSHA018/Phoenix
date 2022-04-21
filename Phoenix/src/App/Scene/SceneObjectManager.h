@@ -1,6 +1,7 @@
 #pragma once 
-#include "SceneObject.h"
 #include <vector>
+
+#include "SceneObject.h"
 
 class SceneObjectManager
 {
@@ -14,5 +15,5 @@ public:
 	void onEvent(IEvent& event);
 
 private:
-	std::vector<ISceneObject*> x_sceneObjects;
+	std::vector<ISceneObject*> x_scene_objects;
 };

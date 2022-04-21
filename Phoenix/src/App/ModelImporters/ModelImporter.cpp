@@ -1,13 +1,13 @@
 #include "ModelImporter.h"
 
 
-ModelImporter::ModelImporter(const char* filepath, unsigned int shaderProgramId)
-	:x_shaderProgramId(shaderProgramId)
+ModelImporter::ModelImporter(const char* file_path, unsigned int shader_program_id)
+	:x_shader_program_id(shader_program_id)
 {
 	position = glm::vec3(0.f);
 	rotation = glm::vec3(0.f);
 	scale = glm::vec3(1.f);
-	this->x_loadModel(filepath);
+	this->x_loadModel(file_path);
 
 }
 
@@ -28,10 +28,10 @@ void ModelImporter::onEvent(IEvent& event)
 {
 }
 
-void ModelImporter::x_loadModel(const char* filepath)
+void ModelImporter::x_loadModel(const char* file_path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(filepath,
+	const aiScene* scene = importer.ReadFile(file_path,
 		aiProcess_FlipUVs |
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
@@ -47,7 +47,7 @@ void ModelImporter::x_loadModel(const char* filepath)
 		return;
 	}
 
-	this->x_directory = std::string(filepath).substr(0, std::string(filepath).find_last_of('/'));
+	this->x_directory = std::string(file_path).substr(0, std::string(file_path).find_last_of('/'));
 	this->x_processNode(scene->mRootNode, scene);
 
 	for (unsigned int i = 0; i < meshes.size(); i++) {
@@ -72,7 +72,7 @@ void ModelImporter::x_processNode(aiNode* node, const aiScene* scene)
 
 void ModelImporter::x_updateUniforms()
 {
-	UniformManager::get()->setUniformMatrix4fv("model", this->x_shaderProgramId, glm::value_ptr(this->x_getModelMatrix()));
+	UniformManager::get()->setUniformMatrix4fv("model", this->x_shader_program_id, glm::value_ptr(this->x_getModelMatrix()));
 
 }
 
@@ -80,41 +80,41 @@ void ModelImporter::x_draw()
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i]->draw(this->x_shaderProgramId);
+		meshes[i]->draw(this->x_shader_program_id);
 	}
 }
 
 glm::mat4 ModelImporter::x_getModelMatrix()
 {
-	glm::mat4 modelMat = glm::mat4(1.f);
-	modelMat = glm::scale(modelMat, scale);
-	modelMat = glm::rotate(modelMat, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
-	modelMat = glm::rotate(modelMat, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
-	modelMat = glm::rotate(modelMat, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
-	modelMat = glm::translate(modelMat, position);
-	return modelMat;
+	glm::mat4 model_matrix = glm::mat4(1.f);
+	model_matrix = glm::scale(model_matrix, scale);
+	model_matrix = glm::rotate(model_matrix, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
+	model_matrix = glm::rotate(model_matrix, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
+	model_matrix = glm::rotate(model_matrix, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
+	model_matrix = glm::translate(model_matrix, position);
+	return model_matrix;
 }
 
 Mesh* ModelImporter::x_processMesh(aiMesh* mesh, const aiScene* scene)
 {
 
 	//TODO:trail for efficiency
-	Mesh* modelMesh = new Mesh();
+	Mesh* model_mesh = new Mesh();
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-		Vertex vertexData;
+		Vertex vertex_data;
 		glm::vec3 placeholder;
 
 		placeholder.x = mesh->mVertices[i].x;
 		placeholder.y = mesh->mVertices[i].y;
 		placeholder.z = mesh->mVertices[i].z;
-		vertexData.Position = placeholder;
+		vertex_data.position = placeholder;
 
 		if (mesh->HasNormals()) {
 			placeholder.x = mesh->mNormals[i].x;
 			placeholder.y = mesh->mNormals[i].y;
 			placeholder.z = mesh->mNormals[i].z;
-			vertexData.Normal = placeholder;
+			vertex_data.normal = placeholder;
 		}
 		if (mesh->mTextureCoords[0]) {
 			glm::vec2 coords;
@@ -122,7 +122,7 @@ Mesh* ModelImporter::x_processMesh(aiMesh* mesh, const aiScene* scene)
 			coords.x = mesh->mTextureCoords[0][i].x;
 			coords.y = mesh->mTextureCoords[0][i].y;
 
-			vertexData.TexCoords = coords;
+			vertex_data.tex_coords = coords;
 
 			//placeholder.x = mesh->mTangents[i].x;
 			//placeholder.y = mesh->mTangents[i].y;
@@ -134,38 +134,38 @@ Mesh* ModelImporter::x_processMesh(aiMesh* mesh, const aiScene* scene)
 			//placeholder.z = mesh->mBitangents[i].z;
 			//vertexData.Bitangent = placeholder;
 		}
-		else vertexData.TexCoords = glm::vec2(0.f, 0.f);
+		else vertex_data.tex_coords = glm::vec2(0.f, 0.f);
 
 
-		modelMesh->vertices.emplace_back(vertexData);
+		model_mesh->vertices.emplace_back(vertex_data);
 	}
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
-			modelMesh->indices.emplace_back(face.mIndices[j]);
+			model_mesh->indices.emplace_back(face.mIndices[j]);
 		}
 	}
 
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-	std::vector<Texture> diffuseMaps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "texture_diffuse");
-	modelMesh->textures.insert(modelMesh->textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	std::vector<Texture> diffuse_maps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "texture_diffuse");
+	model_mesh->textures.insert(model_mesh->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-	std::vector<Texture> specularMaps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_SPECULAR, "texture_specular");
-	modelMesh->textures.insert(modelMesh->textures.end(), specularMaps.begin(), specularMaps.end());
+	std::vector<Texture> specular_maps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_SPECULAR, "texture_specular");
+	model_mesh->textures.insert(model_mesh->textures.end(), specular_maps.begin(), specular_maps.end());
 
-	std::vector<Texture> normalMaps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_HEIGHT, "texture_normal");
-	modelMesh->textures.insert(modelMesh->textures.end(), normalMaps.begin(), normalMaps.end());
+	std::vector<Texture> normal_maps = x_loadMaterialTextures(material, aiTextureType::aiTextureType_HEIGHT, "texture_normal");
+	model_mesh->textures.insert(model_mesh->textures.end(), normal_maps.begin(), normal_maps.end());
 
-	std::vector<Texture> heightMaps = x_loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
-	modelMesh->textures.insert(modelMesh->textures.end(), heightMaps.begin(), heightMaps.end());
+	std::vector<Texture> height_maps = x_loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+	model_mesh->textures.insert(model_mesh->textures.end(), height_maps.begin(), height_maps.end());
 
-	return modelMesh;
+	return model_mesh;
 }
 
-std::vector<Texture> ModelImporter::x_loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName)
+std::vector<Texture> ModelImporter::x_loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string type_name)
 {
 	std::vector<Texture> textures;
 	for (unsigned int i = 0; i < material->GetTextureCount(type); i++)
@@ -186,10 +186,10 @@ std::vector<Texture> ModelImporter::x_loadMaterialTextures(aiMaterial* material,
 		{
 			Texture texture;
 			//texture.id = this->x_textureFromFile(str.C_Str(), this->x_directory,0);
-			std::string filepath = std::string(str.C_Str());
-			filepath = this->x_directory + '/' + filepath;
-			texture.id = TextureFactory::createTextureUnit(filepath.c_str());
-			texture.type = typeName;
+			std::string file_path = std::string(str.C_Str());
+			file_path = this->x_directory + '/' + file_path;
+			texture.id = TextureFactory::createTextureUnit(file_path.c_str());
+			texture.type = type_name;
 			texture.path = str.C_Str();
 			textures.emplace_back(texture);
 		}

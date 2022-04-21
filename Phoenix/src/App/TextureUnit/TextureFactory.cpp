@@ -1,24 +1,24 @@
 
 #include "TextureFactory.h"
 
-unsigned int TextureFactory::createTextureUnit(const char* textureFilePath)
+unsigned int TextureFactory::createTextureUnit(const char* texture_file_path)
 {
-    unsigned int texId;
-	glGenTextures(1, &texId);
-	int width, height, nrComponents;
+	unsigned int tex_id;
+	glGenTextures(1, &tex_id);
+	int width, height, nr_components;
 	//stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load(textureFilePath, &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(texture_file_path, &width, &height, &nr_components, 0);
 	if (data)
 	{
 		GLenum format;
-		if (nrComponents == 1)
+		if (nr_components == 1)
 			format = GL_RED;
-		else if (nrComponents == 3)
+		else if (nr_components == 3)
 			format = GL_RGB;
-		else if (nrComponents == 4)
+		else if (nr_components == 4)
 			format = GL_RGBA;
 
-		glBindTexture(GL_TEXTURE_2D, texId);
+		glBindTexture(GL_TEXTURE_2D, tex_id);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -31,9 +31,9 @@ unsigned int TextureFactory::createTextureUnit(const char* textureFilePath)
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << textureFilePath << std::endl;
+		std::cout << "Texture failed to load at path: " << texture_file_path << std::endl;
 		stbi_image_free(data);
 	}
 
-	return texId;
+	return tex_id;
 }

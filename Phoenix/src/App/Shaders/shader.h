@@ -1,21 +1,21 @@
 #pragma once
 #include "ShaderUtils.h"
 
-struct shaderDetails {
-    const char* vertexShaderFilePath;
-    const char* fragmentShaderFilePath;
-    unsigned int shaderProgramId;
+struct ShaderDetails {
+	const char* vertex_shader_file_path;
+	const char* fragment_shader_file_path;
+	unsigned int shader_program_id;
 };
 
 class Shader {
 public:
-    Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
-    ~Shader();
+	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
+	~Shader();
 public:
-    void useShaderProgram();
-    unsigned int getShaderProgramId();
+	void useShaderProgram();
+	unsigned int getShaderProgramId();
 private:
-    shaderDetails x_shaderInfo;
+	ShaderDetails x_shader_info;
 private:
-    void x_setupShaderProgram();
+	void x_setupShaderProgram();
 };

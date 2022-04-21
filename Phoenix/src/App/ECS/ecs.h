@@ -13,13 +13,13 @@ using ComponentTypeId = unsigned long long;
 using ComponentMask = std::bitset<MAX_COMPONENTS>;
 
 ComponentTypeId getUniqueComponentId() {
-	static ComponentTypeId lastId = 0u;
-	return lastId++;
+	static ComponentTypeId last_id = 0u;
+	return last_id++;
 }
 
 
 template<typename T>
 ComponentTypeId getComponentTypeID() noexcept {
-	static const ComponentTypeId typeId = getUniqueComponentId();
-	return typeId;
+	static const ComponentTypeId type_id = getUniqueComponentId();
+	return type_id;
 }

@@ -23,9 +23,9 @@ bool InputControls::isKeyReleased(int keyCode)
 
 glm::vec2 InputControls::getCursorPos()
 {
-	double xpos, ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-	return glm::vec2(static_cast<float>(xpos), static_cast<float>(ypos));
+	double x_pos, y_pos;
+	glfwGetCursorPos(window, &x_pos, &y_pos);
+	return glm::vec2(static_cast<float>(x_pos), static_cast<float>(y_pos));
 }
 
 bool InputControls::isMouseButtonClicked(int keyCode)

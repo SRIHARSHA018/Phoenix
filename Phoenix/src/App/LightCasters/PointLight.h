@@ -6,12 +6,12 @@ class PointLight :
 	public ILight
 {
 public:
-	PointLight(unsigned int shaderProgramId);
+	PointLight(unsigned int shader_program_id);
 	PointLight(const glm::vec3& ambient,
 		const glm::vec3& diffuse,
 		const glm::vec3& specular,
 		const glm::vec3& position,
-		unsigned int shaderProgramId);
+		unsigned int shader_program_id);
 	~PointLight();
 
 public:
@@ -23,7 +23,7 @@ public:
 
 private:
 	glm::vec3 x_position;
-	unsigned int x_shaderProgramId;
+	unsigned int x_shader_program_id;
 
 private:
 	void x_updateUniforms();

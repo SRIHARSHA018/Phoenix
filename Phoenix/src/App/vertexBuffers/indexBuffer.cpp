@@ -1,33 +1,33 @@
-#include "indexBuffer.h"
-indexBuffer::indexBuffer()
+#include "IndexBuffer.h"
+IndexBuffer::IndexBuffer()
 {
-    glGenBuffers(1, &this->x_indexBufferId);
+	glGenBuffers(1, &this->x_index_buffer_id);
 }
 
 
-indexBuffer::~indexBuffer()
+IndexBuffer::~IndexBuffer()
 {
-    glDeleteBuffers(1, &this->x_indexBufferId);
+	glDeleteBuffers(1, &this->x_index_buffer_id);
 }
 
-unsigned int indexBuffer::getindexBufferId()
+unsigned int IndexBuffer::getindexBufferId()
 {
-    return this->x_indexBufferId;
+	return this->x_index_buffer_id;
 }
 
-void indexBuffer::bindindexBuffer()
+void IndexBuffer::bindindexBuffer()
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->x_indexBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->x_index_buffer_id);
 }
 
-void indexBuffer::unBindindexBuffer()
+void IndexBuffer::unBindindexBuffer()
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->x_indexBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->x_index_buffer_id);
 }
 
-void indexBuffer::bindBufferData(GLsizeiptr size, const void* data)
+void IndexBuffer::bindBufferData(GLsizeiptr size, const void* data)
 {
-    bindindexBuffer();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,size, data, GL_STATIC_DRAW);
+	bindindexBuffer();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 
 }

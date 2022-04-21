@@ -6,5 +6,5 @@
 
 class TextureFactory {
 public:
-	static unsigned int createTextureUnit(const char* textureFilePath);
+	static unsigned int createTextureUnit(const char* texture_file_path);
 };

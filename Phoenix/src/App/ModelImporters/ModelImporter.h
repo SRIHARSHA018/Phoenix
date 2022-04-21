@@ -17,7 +17,7 @@ class ModelImporter :public ISceneObject
 {
 public:
 
-	ModelImporter(const char* filepath, unsigned int shaderProgramId);
+	ModelImporter(const char* file_path, unsigned int shader_program_id);
 	~ModelImporter();
 
 public:
@@ -25,17 +25,17 @@ public:
 	virtual void onEvent(IEvent& event);
 
 private:
-	void x_loadModel(const char* filepath);
+	void x_loadModel(const char* file_path);
 	void x_processNode(aiNode* node, const aiScene* scene);
 	void x_updateUniforms();
 	void x_draw();
 	glm::mat4 x_getModelMatrix();
 	Mesh* x_processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> x_loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typename);
+	std::vector<Texture> x_loadMaterialTextures(aiMaterial* material, aiTextureType type, std::string type_name);
 
 private:
 	std::string x_directory;
-	unsigned int x_shaderProgramId;
+	unsigned int x_shader_program_id;
 
 public:
 	std::vector<Mesh*> meshes;

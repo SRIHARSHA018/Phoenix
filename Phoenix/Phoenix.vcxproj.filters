@@ -18,22 +18,22 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\sandbox.cpp">
+    <ClCompile Include="src\App\Sandbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\Shaders\shader.cpp">
+    <ClCompile Include="src\App\Shaders\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\vertexBuffers\vertexBuffer.cpp">
+    <ClCompile Include="src\App\vertexBuffers\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\renderer.cpp">
+    <ClCompile Include="src\App\RenderSystem\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\Shaders\UniformManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\Window\windowRender.cpp">
+    <ClCompile Include="src\App\Window\WindowRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\includes\x64\StbImage\stb_image.cpp">
@@ -42,10 +42,10 @@
     <ClCompile Include="Dependencies\includes\x64\GLM\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\Camera\camera.cpp">
+    <ClCompile Include="src\App\Camera\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\global.cpp">
+    <ClCompile Include="src\App\Global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\Events\WindowEvents.h">
@@ -78,10 +78,10 @@
     <ClCompile Include="src\App\ModelImporters\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\vertexBuffers\vertexArray.cpp">
+    <ClCompile Include="src\App\vertexBuffers\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\App\vertexBuffers\indexBuffer.cpp">
+    <ClCompile Include="src\App\vertexBuffers\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\Materials\StandardMaterial.cpp">
@@ -94,6 +94,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\App\Shaders\ShaderUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\App\RenderSystem\RenderEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,22 +119,22 @@
     <ClInclude Include="Dependencies\includes\x64\GLFW\glfw3native.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\sandbox.h">
+    <ClInclude Include="src\App\Sandbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\Shaders\shader.h">
+    <ClInclude Include="src\App\Shaders\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\vertexBuffers\vertexBuffer.h">
+    <ClInclude Include="src\App\vertexBuffers\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\renderer.h">
+    <ClInclude Include="src\App\RenderSystem\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Shaders\UniformManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\Window\windowRender.h">
+    <ClInclude Include="src\App\Window\WindowRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\includes\x64\StbImage\stb_image.h">
@@ -986,10 +989,10 @@
     <ClInclude Include="Dependencies\includes\x64\GLM\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\Camera\camera.h">
+    <ClInclude Include="src\App\Camera\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\global.h">
+    <ClInclude Include="src\App\Global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Events\Event.h">
@@ -1286,10 +1289,10 @@
     <ClInclude Include="src\App\ModelImporters\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\vertexBuffers\vertexArray.h">
+    <ClInclude Include="src\App\vertexBuffers\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\vertexBuffers\indexBuffer.h">
+    <ClInclude Include="src\App\vertexBuffers\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\Materials\IMaterial.h">
@@ -1310,7 +1313,7 @@
     <ClInclude Include="src\App\Window\WindowUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\App\ECS\ecs.h">
+    <ClInclude Include="src\App\ECS\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\ECS\Component.h">
@@ -1320,6 +1323,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\App\ECS\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Components\CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Components\LightComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Components\ShaderComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\Components\RenderableComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\RenderSystem\RenderEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NamingConventions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1739,10 +1763,10 @@
     <None Include="Dependencies\includes\x64\GLM\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\App\Shaders\glslShaders\guiShader.vert" />
-    <None Include="src\App\Shaders\glslShaders\guiShader.frag" />
-    <None Include="src\App\Shaders\glslShaders\simple_shader.frag" />
-    <None Include="src\App\Shaders\glslShaders\simple_shader.vert" />
+    <None Include="src\App\Shaders\GlslShaders\guiShader.vert" />
+    <None Include="src\App\Shaders\GlslShaders\guiShader.frag" />
+    <None Include="src\App\Shaders\GlslShaders\simple_shader.frag" />
+    <None Include="src\App\Shaders\GlslShaders\simple_shader.vert" />
     <None Include="assimp-vc142-mtd.dll" />
     <None Include="Dependencies\includes\x64\Assimp\color4.inl">
       <Filter>Header Files</Filter>
@@ -1768,9 +1792,9 @@
     <None Include="Dependencies\includes\x64\Assimp\vector3.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\App\Shaders\glslShaders\model_loading.vert" />
-    <None Include="src\App\Shaders\glslShaders\model_loading.frag" />
-    <None Include="src\App\Shaders\glslShaders\mouse_picking.vert" />
-    <None Include="src\App\Shaders\glslShaders\mouse_picking.frag" />
+    <None Include="src\App\Shaders\GlslShaders\model_loading.vert" />
+    <None Include="src\App\Shaders\GlslShaders\model_loading.frag" />
+    <None Include="src\App\Shaders\GlslShaders\mouse_picking.vert" />
+    <None Include="src\App\Shaders\GlslShaders\mouse_picking.frag" />
   </ItemGroup>
 </Project>

@@ -1,17 +1,17 @@
 #pragma once
 #include <GLEW/glew.h>
 //new layout
-class vertexBuffer
+class VertexBuffer
 {
 private:
-    unsigned int x_vertexBufferId;
+	unsigned int x_vertex_buffer_id;
 public:
-    vertexBuffer();
-    ~vertexBuffer();
+	VertexBuffer();
+	~VertexBuffer();
 public:
-    unsigned int getVertexBufferId();
-    void bindVertexBuffer();
-    void unBindVertexBuffer();
-    void bindBufferData(GLsizeiptr size, const void* data);
+	unsigned int getVertexBufferId();
+	void bindVertexBuffer();
+	void unBindVertexBuffer();
+	void bindBufferData(GLsizeiptr size, const void* data);
 
 };
